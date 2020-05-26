@@ -1,12 +1,14 @@
 <?php
-
-define("DATABASE_HOST", "localhost", true);
-define("USERNAME", "root", true);
-define("PASSWORD", "", true);
-define("DATABASE_NAME", "fmi_parking", true);
+$configs = include('database_properties.php');
 
 function getDatabaseConnection()
 {
-    $connection = new PDO("mysql:host=DATABASE_HOST;dbname=DATABASE_NAME", USERNAME, PASSWORD) or die("The connection with the database was not established!");
+    global $configs;
+    $host = $configs['host'];
+    $dbname = $configs['database_name'];
+    $username = $configs['username'];
+    $password = $configs['password'];
+
+    $connection = new PDO("mysql:host=$host;dbname=$dbname", $username, $password) or die("The connection with the database was not  established!");
     return $connection;
 }
