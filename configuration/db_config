@@ -1,0 +1,6 @@
+<?php
+
+const DATABASE_HOST = "localhost";
+const USERNAME = "root";
+const PASSWORD = "";
+const DATABASE_NAME = "fmi_parking";
