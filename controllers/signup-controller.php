@@ -7,12 +7,14 @@
     define("PASSWORD_FIELD", "password", true);
     define("STATUS_FIELD", "status", true);
     define("PHOTO_FIELD", "photo", true);
+    define("CONFIRMED_PASSWORD_FIELD", "confirmedpassword", true);
 
     $invalidFieldMessages = array(
         FIRST_NAME_FIELD => "Please insert correct firstname without any special signs.",
         LAST_NAME_FIELD => "Please insert correct lastname without any special signs.",
         EMAIL_FIELD => "Please insert correct email.",
         PASSWORD_FIELD => "Please insert password with min length 10 symbols.",
+        CONFIRMED_PASSWORD_FIELD => "The two passwords should be the same.",
         STATUS_FIELD => "Please select the most suitable for you status."
     );
 
@@ -28,7 +30,6 @@
         // TODO generate QR code
 
         if (!isExistingEmail($email)) {
-
             $connection = getDatabaseConnection();
             $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
             $table = "users";
@@ -43,8 +44,7 @@
             $preparedSql->bindParam(':status', $status);
             $preparedSql->bindParam(':photo', $photo);
             $preparedSql->bindParam(':points', $points);
-            $preparedSql->execute() or die("Failed to save to DB!");
-
+            $preparedSql->execute() or die("Failed to save DB!" . $preparedSql->error);
             echo ("Success! You are registered with $email with status: $status");
         } else {
             echo ("The email is already existing.");
@@ -58,14 +58,37 @@
         validateFormField(LAST_NAME_FIELD, '/^[A-Z][a-z-]{3,25}/', $errors);
         validateFormField(EMAIL_FIELD, '/[^@]+@[^\.]+\..+/', $errors);
         validateFormField(PASSWORD_FIELD, '/^.{10,}/', $errors);
-        // TODO validate status
-        //TODO check the two passwords
+        validatePasswords($errors);
+        validateStatus($errors);
 
         if (count($errors) !== 0) {
             foreach ($errors as $value) {
                 echo "$value <br>";
             }
             die();
+        }
+    }
+
+    function validateStatus(&$errors)
+    {
+        $status = $_POST[STATUS_FIELD];
+        if (!in_array($status, Utils::STATUS)) {
+            global $invalidFieldMessages;
+            $errors[STATUS_FIELD] = $invalidFieldMessages[STATUS_FIELD];
+        }
+    }
+
+    function validatePasswords(&$errors)
+    {
+        $password = $_POST[PASSWORD_FIELD];
+        $confirmedPassword = $_POST[CONFIRMED_PASSWORD_FIELD];
+        if (!$confirmedPassword) {
+            $errors[CONFIRMED_PASSWORD_FIELD] = "The field confirmed password is required!";
+        } else if ($password != $confirmedPassword) {
+            if (!array_key_exists(PASSWORD_FIELD, $errors)) {
+                global $invalidFieldMessages;
+                $errors[CONFIRMED_PASSWORD_FIELD] = $invalidFieldMessages[CONFIRMED_PASSWORD_FIELD];
+            }
         }
     }
 

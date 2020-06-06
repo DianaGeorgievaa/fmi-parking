@@ -4,16 +4,26 @@
 <head>
     <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
     <title>Signup</title>
+    <script src="../js/signup-validator.js" defer></script>
 </head>
 
 <body>
-    <form method="post" action="../controllers/signup-controller.php" enctype="multipart/form-data">
-        <input type="text" id="firstname" name="firstname" placeholder="First name" required />
-        <input type="text" id="lastname" name="lastname" placeholder="Last name" required />
-        <input type="text" id="email" name="email" placeholder="Email" required />
-        <input type="password" id="password" name="password" placeholder="Password" required />
-        <input type="password" id="confirmedpassword" name="confirmedpassword" placeholder="Confirm password"
+    <form method="post" onsubmit="return isFormValid()" action=" ../controllers/signup-controller.php"
+        enctype="multipart/form-data">
+        <input type="text" id="firstname" name="firstname" onfocusout="isFirstnameValid()" placeholder="First name"
             required />
+        <p id="firstnameError"></p>
+        <input type="text" id="lastname" name="lastname" onfocusout="isLastnameValid()" placeholder="Last name"
+            required />
+        <p id="lastnameError"></p>
+        <input type="text" id="email" name="email" onfocusout="isEmailValid()" placeholder="Email" required />
+        <p id="emailError"></p>
+        <input type="password" id="password" name="password" onfocusout=" isPasswordValid()" placeholder="Password"
+            required />
+        <p id="passwordError"></p>
+        <input type="password" id="confirmedpassword" name="confirmedpassword" onfocusout="isConfirmPasswordValid()"
+            placeholder="Confirm password" required />
+        <p id="confirmedPasswordError"></p>
         <label for="status">Choose status:</label>
         <select name="status" id="status" readonly>
             <option value="admin">ADMIN</option>
