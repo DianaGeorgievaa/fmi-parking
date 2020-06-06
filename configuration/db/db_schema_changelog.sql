@@ -23,9 +23,7 @@ CREATE TABLE `users` (
     `photo_name` varchar(256) NOT NULL,
     `points` int(11) NOT NULL,
     `qr_code` varchar(256) NOT NULL,
-    PRIMARY KEY (user_id),
-    `user_parking_info_id` int NOT NULL REFERENCES `user_parking_info`(`user_parking_info_id`),
-    CONSTRAINT user_parking_info_id UNIQUE (user_parking_info_id)
+    PRIMARY KEY (user_id)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8;
 
 CREATE TABLE `courses` (
@@ -67,7 +65,9 @@ CREATE TABLE `user_parking_info` (
     `is_timed_out` boolean,
     PRIMARY KEY (user_parking_info_id),
     `parking_spot_id` int NOT NULL REFERENCES parking_spot(parking_spot_id),
-    CONSTRAINT parking_spot_id UNIQUE (parking_spot_id)
+    CONSTRAINT parking_spot_id UNIQUE (parking_spot_id),
+    `user_id` int NOT NULL REFERENCES `users`(`user_id`),
+    CONSTRAINT user_id UNIQUE (user_id)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8;
 
 CREATE TABLE `profile_viewer` (
