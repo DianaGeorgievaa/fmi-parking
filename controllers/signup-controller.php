@@ -3,6 +3,7 @@
     include('../lib/full/qrlib.php');
 
     define("QR_CODES_FOLDER_PATH", "../QRCodes", true);
+    define("USER_PHOTOS_FOLDER_PATH", "../userPhotos/", true);
     define("EMAIL_FIELD", "email", true);
     define("FIRST_NAME_FIELD", "firstname", true);
     define("LAST_NAME_FIELD", "lastname", true);
@@ -30,6 +31,7 @@
         $points = 0;
         $photo = getUploadedPhoto();
 
+        createFolder(QR_CODES_FOLDER_PATH);
         $qrCodeNameValue = $firstname . $lastname . 'png';
         QRcode::png($qrCodeNameValue, QR_CODES_FOLDER_PATH);
 
@@ -124,13 +126,9 @@
 
     function getUploadedPhoto()
     {
-        $photosDirectory = "../userPhotos/";
-        if (!is_dir($photosDirectory)) {
-            mkdir($photosDirectory, 0755);
-        }
-
+        createFolder(USER_PHOTOS_FOLDER_PATH);
         $photoName = basename($_FILES[PHOTO_FIELD]['name']);
-        $photoTarget = $photosDirectory . $photoName;
+        $photoTarget = USER_PHOTOS_FOLDER_PATH . $photoName;
         $photoType = strtolower(pathinfo($photoTarget, PATHINFO_EXTENSION));;
         $photoUploadErrors = $_FILES[PHOTO_FIELD]["error"];
 
@@ -161,6 +159,13 @@
             if (!move_uploaded_file($_FILES[PHOTO_FIELD]["tmp_name"], $photoTarget)) {
                 die("Error occured while uploading the image! Please try again!");
             }
+        }
+    }
+
+    function createFolder($folderPath)
+    {
+        if (!is_dir($folderPath)) {
+            mkdir($folderPath, 0777);
         }
     }
 
