@@ -1,5 +1,6 @@
     <?php
     include '../configuration/db_config.php';
+    include '../utils';
     include('../lib/full/qrlib.php');
 
     define("QR_CODES_FOLDER_PATH", "../QRCodes", true);
