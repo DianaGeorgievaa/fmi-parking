@@ -41,7 +41,7 @@ function isFirstnameValid() {
     ).innerHTML = INVALID_FIRSTNAME_MESSAGE;
     return false;
   }
-  document.getElementById(INVALID_FIRSTNAME_MESSAGE).innerHTML = "";
+  document.getElementById(INVALID_FIRSTNAME_ID).innerHTML = "";
   return true;
 }
 
@@ -52,7 +52,7 @@ function isLastnameValid() {
     ).innerHTML = INVALID_LASTNAME_MESSAGE;
     return false;
   }
-  document.getElementById(INVALID_LASTNAME_MESSAGE).innerHTML = "";
+  document.getElementById(INVALID_LASTNAME_ID).innerHTML = "";
   return true;
 }
 
@@ -61,7 +61,7 @@ function isEmailValid() {
     document.getElementById(INVALID_EMAIL_ID).innerHTML = INVALID_EMAIL_MESSAGE;
     return false;
   }
-  document.getElementById(INVALID_EMAIL_MESSAGE).innerHTML = "";
+  document.getElementById(INVALID_EMAIL_ID).innerHTML = "";
   return true;
 }
 
@@ -72,7 +72,7 @@ function isPasswordValid() {
     ).innerHTML = INVALID_PASSWORD_MESSAGE;
     return false;
   }
-  document.getElementById(INVALID_PASSWORD_MESSAGE).innerHTML = "";
+  document.getElementById(INVALID_PASSWORD_ID).innerHTML = "";
   return true;
 }
 
@@ -85,6 +85,6 @@ function isConfirmPasswordValid() {
     ).innerHTML = INVALID_CONFIRMED_PASSWORD_MESSAGE;
     return false;
   }
-  document.getElementById(INVALID_CONFIRMED_PASSWORD_MESSAGE).innerHTML = "";
+  document.getElementById(INVALID_CONFIRMED_PASSWORD_ID).innerHTML = "";
   return true;
 }
