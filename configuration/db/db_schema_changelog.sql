@@ -53,9 +53,18 @@ CREATE TABLE `users_courses`(
 
 CREATE TABLE `parking_spot` (
     `parking_spot_id` int NOT NULL AUTO_INCREMENT,
+    `number` int NOT NULL,
+    `zone` VARCHAR(10) NOT NULL,
     `is_free` boolean NOT NULL,
-    PRIMARY KEY (parking_spot_id)
+    `type` VARCHAR(20) NOT NULL,
+    `user_in_spot` VARCHAR(30),
+    `car_in_spot` VARCHAR(30),
+    PRIMARY KEY (`parking_spot_id`)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8;
+
+
+ALTER TABLE `parking_spot` ADD CONSTRAINT UC_Parking_Spot UNIQUE(`number`, `zone`);
+
 
 CREATE TABLE `user_parking_info` (
     `user_parking_info_id` int NOT NULL AUTO_INCREMENT,
