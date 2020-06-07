@@ -1,6 +1,8 @@
     <?php
     include '../configuration/db_config.php';
+    include('../lib/full/qrlib.php');
 
+    define("QR_CODES_FOLDER_PATH", "../QRCodes", true);
     define("EMAIL_FIELD", "email", true);
     define("FIRST_NAME_FIELD", "firstname", true);
     define("LAST_NAME_FIELD", "lastname", true);
@@ -27,14 +29,16 @@
         $status = strtoupper($_POST[STATUS_FIELD]);
         $points = 0;
         $photo = getUploadedPhoto();
-        // TODO generate QR code
+
+        $qrCodeNameValue = $firstname . $lastname . 'png';
+        QRcode::png($qrCodeNameValue, QR_CODES_FOLDER_PATH);
 
         if (!isExistingEmail($email)) {
             $connection = getDatabaseConnection();
             $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
             $table = TableNames::USERS;
-            $sql = "INSERT INTO $table (first_name, last_name, email, password, status, photo_name, points) 
-                            VALUES (:firstname, :lastname, :email, :hashedPassword, :status, :photo, :points);";
+            $sql = "INSERT INTO $table (first_name, last_name, email, password, status, photo_name, points, qr_code) 
+                            VALUES (:firstname, :lastname, :email, :hashedPassword, :status, :photo, :points, :qrCodeNameValue);";
 
             $preparedSql = $connection->prepare($sql) or die("Error description: " . $connnection->error);
             $preparedSql->bindParam(':firstname', $firstname);
@@ -44,6 +48,7 @@
             $preparedSql->bindParam(':status', $status);
             $preparedSql->bindParam(':photo', $photo);
             $preparedSql->bindParam(':points', $points);
+            $preparedSql->bindParam(':qrCodeNameValue', $qrCodeNameValue);
             $preparedSql->execute() or die("Failed to save DB!" . $preparedSql->error);
             echo ("Success! You are registered with $email with status: $status");
         } else {
@@ -119,7 +124,7 @@
 
     function getUploadedPhoto()
     {
-        $photosDirectory = "userPhotos/";
+        $photosDirectory = "../userPhotos/";
         if (!is_dir($photosDirectory)) {
             mkdir($photosDirectory, 0755);
         }
