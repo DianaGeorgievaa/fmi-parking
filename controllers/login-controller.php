@@ -4,7 +4,7 @@ include '../configuration/db_config.php';
 
 function getHashedPassword($connection, $email)
 {
-    $table = "users";
+    $table = TableNames::USERS;
     $sqlQueryForPassword = "SELECT password FROM $table WHERE email = :email;";
     $getHashedPassword = $connection->prepare($sqlQueryForPassword);
     $getHashedPassword->bindParam(':email', $email);
@@ -27,7 +27,7 @@ if (!isset($hashedPassword)) {
 }
 
 if (password_verify($password, $hashedPassword)) {
-    $table = "users";
+    $table = TableNames::USERS;
     $sql = "SELECT * from $table WHERE email = :email;";
 
     $resultSet = $connection->prepare($sql);

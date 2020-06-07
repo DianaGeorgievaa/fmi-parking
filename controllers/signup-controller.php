@@ -32,7 +32,7 @@
         if (!isExistingEmail($email)) {
             $connection = getDatabaseConnection();
             $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-            $table = "users";
+            $table = TableNames::USERS;
             $sql = "INSERT INTO $table (first_name, last_name, email, password, status, photo_name, points) 
                             VALUES (:firstname, :lastname, :email, :hashedPassword, :status, :photo, :points);";
 
@@ -106,7 +106,7 @@
     function isExistingEmail($email)
     {
         $connection = getDatabaseConnection();
-        $table = "users";
+        $table = TableNames::USERS;
         $sql = "SELECT * FROM  $table WHERE email = :email;";
         $preparedSql = $connection->prepare($sql);
         $preparedSql->bindParam(':email', $email);
