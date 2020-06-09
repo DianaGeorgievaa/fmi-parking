@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="css/parking.css">
+    <script src="parking.js"></script>
+    <title>FMI Parking</title>
+</head>
+
+</head>
+
+<body onload="setAvailable();">
+
+    <div class="body-content">
+
+        <header id="header">
+            <a href="parking.html"><img id="su-logo" src="img/su-logo.png"></a>
+            <a href="parking.html"><img src="img/fmi-logo.png"></a>
+            <p id="title">ФМИ Паркинг</p>
+        </header>
+
+        <img src="img/parking-lot.jpg" id="header-img">
+        <nav>
+            <div id='menu'>
+                <ul>
+                    <li><input id="reserveBtn" type="button" value="Резервирай"
+                            onClick="location.href = 'parking-schema.html';" /></li>
+                </ul>
+            </div>
+        </nav>
+
+        <section class="content">
+
+            <section id="text">
+                <div class="page-title">
+                    <h1> Добре дошли!</h1>
+                </div>
+                <article id="intro">
+                    <p>Това е система за резервиране на парко място в паркинга на Факултета по математика и
+                        информатика на Софийски универистет.</p>
+                </article>
+
+                <div class="quote">
+                    <h3>Свободни места в момента: <span id="availableSpots"></span></h3>
+                </div>
+
+            </section>
+        </section>
+</body>
+
+
+</html>
