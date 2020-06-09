@@ -1,6 +1,7 @@
 <?php
 
 include '../configuration/db_config.php';
+include '../utils/tableNames.php';
 
 function getHashedPassword($connection, $email)
 {
@@ -28,16 +29,23 @@ if (!isset($hashedPassword)) {
 
 if (password_verify($password, $hashedPassword)) {
     $table = TableNames::USERS;
-    $sql = "SELECT * from $table WHERE email = :email;";
+    $sql = "SELECT * FROM $table WHERE email = :email;";
 
     $resultSet = $connection->prepare($sql);
     $resultSet->bindParam(':email', $email);
     $resultSet->execute() or die("Failed to query from DB!");
     $firstrow = $resultSet->fetch(PDO::FETCH_ASSOC) or die("Invalid credentials.");
+    $email = $firstrow['email'];
+    $firstname = $firstrow['first_name'];
+    $lastname = $firstrow['last_name'];
+    $status = $firstrow['status'];
 
-    echo ("Hello " . $firstrow['first_name'] . " you are now logged in.");
     session_start();
-    $_SESSION["email"] = $firstrow['email'];
+    $_SESSION["email"] = $email;
+    $_SESSION["firstName"] = $firstname;
+    $_SESSION["lastName"] = $lastname;
+    $_SESSION["status"] = $status;
+    header("Location:" . '../views/main.php');
 } else {
     echo ("Invalid credentials.");
 }

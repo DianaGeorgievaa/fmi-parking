@@ -83,8 +83,8 @@ CREATE TABLE `profile_viewer` (
     `profile_viewer_id` int NOT NULL AUTO_INCREMENT,
     `first_name` varchar(256) NOT NULL,
     `last_name` varchar(256) NOT NULL,
-    `email` tinyint NOT NULL,
+    `email` VARCHAR(256) NOT NULL,
     `view_time` time NOT NULL,
     PRIMARY KEY(profile_viewer_id),
-    `user_id` int NOT NULL REFERENCES users(user_id)
+    `user_id` int NOT NULL
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8;
