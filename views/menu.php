@@ -38,8 +38,8 @@ function getGreetingMessage()
 <body>
     <header>
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <?php if (isLoggedInUser()) { ?>
-            <a class="navbar-brand" href="/index.php">FMI Parking</a>
+            <?php if (isLoggedInUser()) { ?>
+                <a class="navbar-brand" href="/index.php">FMI Parking</a>
             <?php } ?>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -52,6 +52,11 @@ function getGreetingMessage()
                             <li class="nav-item">
                                 <a class="nav-link" href="../views/scheduler.html" id="admin" role="button" aria-haspopup="true" aria-expanded="false">
                                     Add semester schedule
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="../views/top-users-by-points.php" id="admin" role="button" aria-haspopup="true" aria-expanded="false">
+                                    Top 3 users
                                 </a>
                             </li>
                         <?php } else { ?>
