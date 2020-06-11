@@ -68,8 +68,8 @@ ALTER TABLE `parking_spot` ADD CONSTRAINT UC_Parking_Spot UNIQUE(`number`, `zone
 
 CREATE TABLE `user_parking_info` (
     `user_parking_info_id` int NOT NULL AUTO_INCREMENT,
-    `parking_date_in` time NOT NULL,
-    `parking_date_out` time,
+    `parking_date_in` datetime NOT NULL,
+    `parking_date_out` datetime,
     `parking_duration` int(11),
     `is_timed_out` boolean,
     PRIMARY KEY (user_parking_info_id),

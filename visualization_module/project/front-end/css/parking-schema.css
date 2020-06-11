@@ -1,0 +1,33 @@
+#title {
+  text-align: center;
+  margin-top: -54px;
+}
+
+#image {
+  margin-left: 400px;
+  margin-top: 100px;
+}
+
+#availablityInfo {
+  margin-left: 130px;
+}
+
+#image {
+  width: 60%;
+  float: right;
+  margin-top: -160px;
+  margin-right: 120px;
+}
+
+#su-logo {
+  width: 70px;
+}
+
+input[type="button"] {
+  margin-top: 20px;
+  border: none;
+  border-radius: 7%;
+  width: 100px;
+  height: 30px;
+  background-color: lightgreen;
+}

@@ -1,0 +1,39 @@
+.spot {
+  margin: 10px;
+}
+
+.aLeft {
+  margin-left: 50px;
+  margin-top: 200px;
+}
+
+.aRight {
+  margin-left: 500px;
+  margin-top: -60px;
+}
+
+#building {
+  margin-top: -461px;
+  margin-left: 150px;
+}
+
+#body {
+  background-color: lightgrey;
+}
+
+#embedForm {
+  margin-left: 800px;
+  width: 30%;
+  margin-top: -300px;
+  border-style: solid;
+  border-color: darkgray;
+  background-color: white;
+  display: none;
+}
+
+#availabilityInfo {
+  margin-top: 20px;
+  font-size: medium;
+  font-weight: 200;
+  margin-left: 30px;
+}

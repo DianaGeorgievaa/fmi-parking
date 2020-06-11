@@ -1,0 +1,62 @@
+#formTitle {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.regInput {
+  width: 400px;
+  margin-bottom: 10px;
+  margin-top: 10px;
+  height: 30px;
+  border: none;
+  border-bottom: solid;
+  border-bottom-color: grey;
+  border-bottom-width: 1px;
+}
+
+#inputFields {
+  text-align: center;
+}
+
+.error {
+  margin: 0 15px 15px;
+  color: red;
+  display: none;
+}
+
+#usernameErr,
+#carErr,
+#dateErr {
+  margin: 0 15px 15px;
+  color: red;
+  display: none;
+}
+
+#submitBtn {
+  margin-top: 20px;
+  border: none;
+  border-radius: 7%;
+  width: 100px;
+  height: 30px;
+  background-color: lightgreen;
+}
+
+#emptyFieldsError,
+#alreadyExistingUserError {
+  margin: 0 15px 15px;
+  color: red;
+  display: none;
+}
+
+.required {
+  color: #ff0000;
+}
+
+.success {
+  color: green;
+}
+
+#successReservation {
+  margin: 0 15px 15px;
+  display: none;
+}

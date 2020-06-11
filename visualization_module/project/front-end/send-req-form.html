@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="./css/send-req-form.css">
+	<script src="./reservation-request.js"></script>
+</head>
+
+<body>
+    <form id="regForm">
+        <div id="formTitle"><b>Резервация</b></div>
+        <div id="inputFields">
+
+            <span class="error" id="emptyFieldsError">Моля, попълнете всички полета!</span>
+            <span class="success" id="successReservation">Успешна резервация!</span>
+            <span class="error" id="alreadyExistingUserError">Вече съществува такава резервация!</span>
+
+            <input class="regInput" type="text" name="username" placeholder="Username">
+            <span class="error" id="usernameErr">Потребителското име трябва да бъде валидно.</span>
+            <span class="required">* </span>
+            <br>
+
+            <input class="regInput" type="datetime" name="date" placeholder="Date and time">
+            <span class="error" id="dateErr">Датата и часа трябва да бъдат валидни.</span>
+            <span class="required">* </span>
+            <br>
+
+            <input class="regInput" type="text" name="carNumber" placeholder="Car number">
+            <span class="error" id="carErr">Номерът на колата трябва да е валиден.</span>
+            <span class="required">* </span>
+            <br>
+            <input type="hidden" id="data" />
+
+            <input id="submitBtn" type="button" value="Reserve" onClick=reserve(); />
+        </div>
+    </form>
+</body>
+
+</html>

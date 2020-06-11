@@ -3,6 +3,7 @@ class Utils
 {
     const QR_CODE_FOLDER_PATH = '../QRCodes/';
     const USER_PHOTO_FOLDER_PATH = '../userPhotos/';
+    const REQUIRED_PARKING_SPOTS = 10;
     
     const STATUS = [
         'Admin' => 'ADMIN',
