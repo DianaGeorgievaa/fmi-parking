@@ -8,10 +8,15 @@
 </head>
 
 <body>
+    <?php
+    include '../views/menu.php';
+    ?>
     <form method="POST" action="../controllers/scheduler.php">
-        <label for="myfile">Select scheduler:</label>
+    <div class="content">
+        <label for="myfile">Add new scheduler:</label>
         <input type="file" name="scheduler" id="scheduler" accept="application/JSON" required>
-        <input type="submit" value="Upload sheduler" name="submit">
+        <input type="submit" id="upload-scheduler-button" value="Upload sheduler" name="submit">
+    </div>
     </form>
 </body>
 

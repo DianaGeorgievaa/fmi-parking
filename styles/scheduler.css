@@ -1,0 +1,30 @@
+body {
+    background-image: url('../assets/background.png');
+    background-size: 100% 100%;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+}
+
+.content {
+    width: 450px;
+}
+
+input,
+.content {
+    margin-top: 10px;
+}
+
+#upload-scheduler-button {
+    padding-top: 5px;
+    padding-bottom: 5px;
+    border-radius: 4px;
+    font-weight: 800;
+    font-size: 14px;
+    color: #ffffff;
+    background-color: #858383;
+    cursor: pointer;
+}
+
+#upload-scheduler-button:hover {
+    background-color: #585757;
+}

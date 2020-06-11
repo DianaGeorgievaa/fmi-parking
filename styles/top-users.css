@@ -1,0 +1,42 @@
+body {
+    background-image: url('../assets/background.png');
+    background-size: 100% 100%;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+}
+
+.content {
+    margin-top: 20px;
+    width: 600px;
+}
+
+#top-users {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+    margin-top: 10px;
+    text-align: center;
+}
+
+#top-users td,
+#top-users th {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+#top-users tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+#top-users tr:hover {
+    cursor: pointer;
+    background-color: #ddd;
+}
+
+#top-users th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    background-color: rgb(61, 66, 62);
+    color: #ffffff;
+    text-align: center;
+}
