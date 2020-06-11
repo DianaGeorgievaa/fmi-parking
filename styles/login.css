@@ -1,0 +1,77 @@
+body {
+    background-image: url('../assets/background.png');
+    background-size: 100% 100%;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    font-family: 'Open Sans', sans-serif;
+    text-align: center;
+    margin: 20px 0px 20px 0px;
+}
+
+.box {
+    background: #ffffff;
+    width: 300px;
+    border-radius: 6px;
+    margin: 0 auto 0 auto;
+    padding: 0px 0px 70px 0px;
+    border: #9ea1a1 4px solid;
+}
+
+.box>input {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    height: 25px;
+}
+
+#email-label {
+    margin-right: 35px;
+}
+
+#password-label {
+    margin-right: 5px;
+}
+
+#email-label,
+#password-label {
+    margin-left: 10px;
+}
+
+.controls {
+    margin-left: 60px;
+}
+
+#login-button,
+#sign-up-button {
+    width: 60px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    color: #ffffff;
+    border-radius: 4px;
+    float: left;
+    font-weight: 800;
+    font-size: 14px;
+    margin-top: 5px;
+}
+
+#login-button {
+    background: #2ecc71;
+    border: #27ae60 1px solid;
+    margin-left: 60px;
+    cursor: pointer;
+}
+
+#sign-up-button {
+    background: #3498db;
+    border: #2980b9 1px solid;
+    margin-left: 10px;
+}
+
+#login-button:hover {
+    background: #2CC06B;
+}
+
+#sign-up-button:hover {
+    background: #3594D2;
+}

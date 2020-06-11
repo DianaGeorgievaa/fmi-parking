@@ -13,27 +13,40 @@ include '../views/menu.php';
     $resultSet = $connection->prepare($sql);
     $resultSet->execute() or die("Failed to query from DB!");
 ?>
+<!DOCTYPE html>
+<html>
 
-    <label><?php echo "The top 3 users by parking points are: <br>" ?></label>
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Firstname</th>
-                <th>Lastname</th>
-                <th>Points</th>
-            </tr>
-        </thead>
-        <tbody>
+<head>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+    <link rel="stylesheet" type="text/css" href="../styles/top-users.css">
+    <script type="text/javascript" src="../js/user-profile-redirection.js"></script>
+    <title>My profile</title>
+</head>
 
-            <?php
-            while ($users = $resultSet->fetch(PDO::FETCH_ASSOC)) {
-            ?>
+<body>
+    <div class="content">
+        <h2><?php echo "The top 3 users by parking points are: <br>" ?></h2>
+        <table id="top-users">
+            <thead>
                 <tr>
-                    <td><?= $users['first_name'] ?></td>
-                    <td><?= $users['last_name'] ?></td>
-                    <td><?= $users['points'] ?></td>
+                    <th>Name</th>
+                    <th>Points</th>
                 </tr>
-            <?php }
-        } else { ?>
-            <label><?php echo "You should br logged in!" ?></label>
-        <?php } ?>
+            </thead>
+            <tbody>
+                <?php
+                while ($users = $resultSet->fetch(PDO::FETCH_ASSOC)) {
+                    $currentUserId = $users['user_id'];
+                ?>
+                    <tr <?php echo "onclick='showUserProfile(".$currentUserId.")'" ?>>
+                        <td><?= $users['first_name'] . ' ' . $users['last_name'] ?></td>
+                        <td><?= $users['points'] ?></td>
+                    </tr>
+                <?php }
+            } else { ?>
+                <label><?php echo "You should br logged in!" ?></label>
+            <?php } ?>
+    </div>
+</body>
+
+</html>

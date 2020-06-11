@@ -30,44 +30,65 @@ if (!isset($_SESSION)) {
     $userId = $user['user_id'];
     $userPoints = $user['points'];
     $userStatus = $user['status'];
+    $userStatusLowerCase = ucfirst(strtolower($userStatus));
     $photoName = $user['photo_name'];
     $photoPath = Utils::USER_PHOTO_FOLDER_PATH . $photoName;
 ?>
-    <img src="<?php echo $photoPath ?>">
-    <label><?php echo "Status: $userStatus" ?></label>
-    <label><?php echo "Parking points: $userPoints" ?></label>
+<!DOCTYPE html>
+<html>
 
-    <?php
-    $table = TableNames::PROFILE_VIEWER;
-    $sql = "SELECT * FROM $table WHERE user_id = :userId;;";
+<head>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+    <link rel="stylesheet" type="text/css" href="../styles/my-profile.css">
+    <title>My profile</title>
+</head>
 
-    $connection = getDatabaseConnection();
-    $resultSet = $connection->prepare($sql);
-    $resultSet->bindParam(':userId', $userId);
-    $resultSet->execute() or  die("Failed to query from DB!");
-    ?>
+<body>
+    <div class="content">
+        <div class="user-info">
+            <img src="<?php echo $photoPath ?>">
+            <div class="info">
+                <h2>My info</h2>
+                <label><?php echo "Status: $userStatusLowerCase" ?></label>
+                <label><?php echo "Parking points: $userPoints" ?></label>
+            </div>
+        </div>
+    
+        <?php
+        $table = TableNames::PROFILE_VIEWER;
+        $sql = "SELECT * FROM $table WHERE user_id = :userId;;";
 
-    <label><?php echo "Your profile was viewed by the following users: <br>" ?></label>
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Firstname</th>
-                <th>Lastname</th>
-                <th>Email</th>
-                <th>View time</th>
-            </tr>
-        </thead>
-        <tbody>
+        $connection = getDatabaseConnection();
+        $resultSet = $connection->prepare($sql);
+        $resultSet->bindParam(':userId', $userId);
+        $resultSet->execute() or  die("Failed to query from DB!");
+        ?>
 
-            <?php
-            while ($row = $resultSet->fetch(PDO::FETCH_ASSOC)) { ?>
+        <h4><?php echo "My profile was viewed by the following users: <br>" ?></h4>
+        <table id="viewers">
+            <thead>
                 <tr>
-                    <td><?= $row['first_name'] ?></td>
-                    <td><?= $row['last_name'] ?></td>
-                    <td><?= $row['email'] ?></td>
-                    <td><?= $row['view_time'] ?></td>
+                    <th>Firstname</th>
+                    <th>Lastname</th>
+                    <th>Email</th>
+                    <th>View time</th>
                 </tr>
-            <?php }
-        } else { ?>
-            <label><?php echo "You should br logged in!" ?></label>
-        <?php } ?>
+            </thead>
+            <tbody>
+
+                <?php
+                while ($row = $resultSet->fetch(PDO::FETCH_ASSOC)) { ?>
+                    <tr>
+                        <td><?= $row['first_name'] ?></td>
+                        <td><?= $row['last_name'] ?></td>
+                        <td><?= $row['email'] ?></td>
+                        <td><?= $row['view_time'] ?></td>
+                    </tr>
+                <?php }
+            } else { ?>
+                <label><?php echo "You should br logged in!" ?></label>
+            <?php } ?>
+        </div>
+</body>
+
+</html>

@@ -7,7 +7,6 @@ include '../views/menu.php';
 
 function getUser($userId)
 {
-
     $table = TableNames::USERS;
     $sql = "SELECT * FROM $table WHERE user_id = :userId;";
 
@@ -29,9 +28,10 @@ function getUserParkingInfoId($userId)
     $resultSet = $connection->prepare($sql);
     $resultSet->bindParam(':userId', $userId);
     $resultSet->execute() or die("Failed to query from DB!");
-    $parkingSpotInfo = $resultSet->fetch(PDO::FETCH_ASSOC) or die("Failed to get user.");
-
-    return $parkingSpotInfo;
+    if(empty($parkingSpotInfo)){
+        return "";
+    }
+    return $resultSet->fetch(PDO::FETCH_ASSOC) or die("Failed to get user parking info.");
 }
 
 function getParkingSpot($parkingSpotId)
@@ -42,13 +42,14 @@ function getParkingSpot($parkingSpotId)
     $connection = getDatabaseConnection();
     $resultSet = $connection->prepare($sql);
     $resultSet->bindParam(':parkingSpotId', $parkingSpotId);
-    $resultSet->execute() or die("Failed to query from DB!");
-    $parkingSpot = $resultSet->fetch(PDO::FETCH_ASSOC) or die("Failed to get user.");
-
-    return $parkingSpot;
+    $parkingSpot = $resultSet->execute() or die("Failed to query from DB!");
+    if(empty($parkingSpot)){
+        return "";
+    }
+    return $resultSet->fetch(PDO::FETCH_ASSOC) or die("Failed to get user.");
 }
 
-function saveViewer($userId)
+function saveViewer($viewedUserId)
 {
     $table = TableNames::PROFILE_VIEWER;
     $sql = "INSERT INTO $table (first_name, last_name, email, view_time, user_id) 
@@ -56,8 +57,8 @@ function saveViewer($userId)
 
     $viewerFirstname = $_SESSION['firstName'];
     $viewerLastname = $_SESSION['lastName'];
-    $viewerEmail =  $_SESSION["email"];
-    $viewTime = date("h:i:s");
+    $viewerEmail = $_SESSION["email"];
+    $viewTime = date("Y-m-d H:i:s");
 
     $connection = getDatabaseConnection();
     $resultSet = $connection->prepare($sql);
@@ -65,25 +66,29 @@ function saveViewer($userId)
     $resultSet->bindParam(':lastname', $viewerLastname);
     $resultSet->bindParam(':email', $viewerEmail);
     $resultSet->bindParam(':viewTime', $viewTime);
-    $resultSet->bindParam(':userId', $userId);
+    $resultSet->bindParam(':userId', $viewedUserId);
     $resultSet->execute() or die("Failed to query from DB!");
 }
 
 if (isLoggedInUser()) {
-    $userId = $_SERVER['userId'];;
-    $user = getUser($userId);
+    $viewedUserId = $_REQUEST['viewedUserId'];
+    $user = getUser($viewedUserId);
     $firstname = $user['first_name'];
     $lastname = $user['last_name'];
     $email = $user['email'];
     $userPoints = $user['points'];
     $userStatus = $user['status'];
+    $userStatusLowerCase = ucfirst(strtolower($userStatus));
     $photoName = $user['photo_name'];
     $photoPath = Utils::USER_PHOTO_FOLDER_PATH . $photoName;
 
-    saveViewer($userId);
+    saveViewer($viewedUserId);
 
-    $parkingSpotId = getUserParkingInfoId($userId);
-    $parkingSpot = getParkingSpot($parkingSpotId);
+    $parkingSpotId = getUserParkingInfoId($viewedUserId);
+    $parkingSpot = "";
+    if($parkingSpotId != ""){
+        $parkingSpot = getParkingSpot($parkingSpotId);
+    }
 }
 ?>
 
@@ -92,23 +97,30 @@ if (isLoggedInUser()) {
 
 <head>
     <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+    <link rel="stylesheet" type="text/css" href="../styles/view-user-profile.css">
     <title>User profile</title>
 </head>
 
 <body>
-    <img src="<?php echo $photoPath ?>">
-    <label><?php echo "Firstname: $firstname" ?></label>
-    <label><?php echo "Lastname: $lastname" ?></label>
-    <label><?php echo "Email: $email" ?></label>
-    <label><?php echo "Parking points: $userPoints" ?></label>
-    <label><?php echo "Status: $userStatus" ?></label>
-    <label><?php if (!empty($parkingSpot)) {
-                $zone = $parkingSpot['zone'];
-                $parkNumber = $parkingSpot['number'];
-                echo "The user is parked on parking spot: $zone $parkNumber";
-            } else {
-                echo "The user is not in the parking now!";
-            } ?></label>
+    <div class="content">
+        <div class="user-info">
+            <img src="<?php echo $photoPath ?>">
+            <div class="info">
+                <h2>User info</h2>
+                <label><?php echo "Name: $firstname $lastname" ?></label>
+                <label><?php echo "Email: $email" ?></label>
+                <label><?php echo "Parking points: $userPoints" ?></label>
+                <label><?php echo "Status: $userStatusLowerCase" ?></label>
+                <label><?php if ($parkingSpot != "") {
+                            $zone = $parkingSpot['zone'];
+                            $parkNumber = $parkingSpot['number'];
+                            echo "The user is parked on parking spot: $zone $parkNumber";
+                        } else {
+                            echo "<b> The user is not in the parking now! </b>";
+                        } ?></label>
+            </div>
+        </div>
+    </div>
 </body>
 
 </html>

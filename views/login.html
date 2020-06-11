@@ -3,18 +3,27 @@
 
 <head>
     <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+    <link rel="stylesheet" type="text/css" href="../styles/login.css">
     <title>Login</title>
 </head>
 
 <body>
     <form method="post" action="../controllers/login-controller.php">
-        <label for="email">Email:</label>
-        <input id="email" name="email" required>
-        <br>
-        <label for="password">Password:</label>
-        <input id="password" type="password" name="password" required>
-        <br>
-        <button> Login</button>
+        <div class="box">
+            <h2>Login</h2>
+            <label for="email" id="email-label">Email:</label>
+            <input type="email" id="email" name="email" required>
+            <br>
+            <label for="password" id="password-label">Password:</label>
+            <input type="password" id="password" name="password" required>
+            <br>
+            <div class="controls">
+                <input type="submit" id="login-button" name="name" />
+                <a href="../views/signup.html">
+                    <div id="sign-up-button">Sign up</div>
+                </a>
+            </div>
+        </div>
     </form>
 </body>
 

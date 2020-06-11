@@ -3,6 +3,7 @@
 
 <head>
     <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+    <link rel="stylesheet" type="text/css" href="../styles/main.css">
     <script src="../js/print-qr-code.js"></script>
     <title>FMI Parking</title>
 </head>
@@ -15,9 +16,10 @@
 
     if (isLoggedInUser()) {
         $userQRCodePath = Utils::QR_CODE_FOLDER_PATH . $_SESSION['firstName'] . $_SESSION['lastName'] . '.png'; ?>
-
-        <img id="qrCode" src="<?php echo $userQRCodePath ?>">
-        <button onclick="printQRCode()">Print</button>
+        <div>
+            <img id="qrCode" src="<?php echo $userQRCodePath ?>">
+            <button onclick="printQRCode()">Print <i>&#128424;</i></button>
+        </div>
     <?php } ?>
 </body>
 

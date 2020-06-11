@@ -1,0 +1,63 @@
+body {
+    background-image: url('../assets/background.png');
+    background-size: 100% 100%;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+}
+
+img {
+    width: 400px;
+    height: 300px;
+}
+
+.content {
+    margin-top: 20px;
+    width: 600px;
+}
+
+label {
+    width: 350px;
+    display: inline-block;
+    margin-top: 10px;
+}
+
+#viewers {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+    margin-top: 10px;
+    text-align: center;
+}
+
+#viewers td,
+#viewers th {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+#viewers tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+#viewers tr:hover {
+    background-color: #ddd;
+}
+
+#viewers th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    background-color: rgb(61, 66, 62);
+    color: #ffffff;
+    text-align: center;
+}
+
+.user-info {
+    display: flex;
+    flex-direction: row;
+}
+
+.info {
+    display: flex;
+    flex-direction: column;
+    margin-left: 10px;
+}

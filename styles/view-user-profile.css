@@ -1,0 +1,31 @@
+body {
+    background-image: url('../assets/background.png');
+    background-size: 100% 100%;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+}
+
+img {
+    width: 300px;
+    height: 300px;
+}
+
+.content {
+    margin-top: 20px;
+    width: 600px;
+}
+
+.user-info {
+    display: flex;
+    flex-direction: row;
+}
+
+.info {
+    display: flex;
+    flex-direction: column;
+    margin-left: 10px;
+}
+
+label {
+    margin-bottom: 10px;
+}

@@ -3,38 +3,41 @@
 
 <head>
     <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
-    <title>Signup</title>
+    <link rel="stylesheet" type="text/css" href="../styles/singup.css">
     <script src="../js/signup-validator.js" defer></script>
+    <title>Sign up</title>
 </head>
 
 <body>
-    <form method="post" onsubmit="return isFormValid()" action=" ../controllers/signup-controller.php"
-        enctype="multipart/form-data">
-        <input type="text" id="firstname" name="firstname" onfocusout="isFirstnameValid()" placeholder="First name"
-            required />
-        <p id="firstnameError"></p>
-        <input type="text" id="lastname" name="lastname" onfocusout="isLastnameValid()" placeholder="Last name"
-            required />
-        <p id="lastnameError"></p>
-        <input type="text" id="email" name="email" onfocusout="isEmailValid()" placeholder="Email" required />
-        <p id="emailError"></p>
-        <input type="password" id="password" name="password" onfocusout=" isPasswordValid()" placeholder="Password"
-            required />
-        <p id="passwordError"></p>
-        <input type="password" id="confirmedpassword" name="confirmedpassword" onfocusout="isConfirmPasswordValid()"
-            placeholder="Confirm password" required />
-        <p id="confirmedPasswordError"></p>
-        <label for="status">Choose status:</label>
-        <select name="status" id="status" readonly>
-            <option value="admin">ADMIN</option>
-            <option value="permanent">PERMANENT</option>
-            <option value="temporary">TEMPORARY</option>
-            <option value="blocked">BLOCKED</option>
-        </select>
-        <label for="img">Photo:</label>
-        <input type="file" id="photo" name="photo" accept="image/*" placeholder="Photo" required />
+    <form method="post" onsubmit="return isFormValid()" action=" ../controllers/signup-controller.php" enctype="multipart/form-data">
+        <div class="box">
+            <h2>Registration</h2>
+            <p id="firstnameError"></p>
+            <input type="text" id="firstname" name="firstname" onfocusout="isFirstnameValid()" placeholder="First name" required />
+            <p id="lastnameError"></p>
+            <input type="text" id="lastname" name="lastname" onfocusout="isLastnameValid()" placeholder="Last name" required />
+            <p id="emailError"></p>
+            <input type="text" id="email" name="email" onfocusout="isEmailValid()" placeholder="Email" required />
+            <p id="passwordError"></p>
+            <input type="password" id="password" name="password" onfocusout=" isPasswordValid()" placeholder="Password" required />
+            <p id="confirmedPasswordError"></p>
+            <input type="password" id="confirmedpassword" name="confirmedpassword" onfocusout="isConfirmPasswordValid()" placeholder="Confirm password" required />
+            <div class="additional-fields">
+                <label for="status" id="status-field">Status:</label>
+                <select name="status" id="status" readonly>
+                    <option value="admin">ADMIN</option>
+                    <option value="permanent">PERMANENT</option>
+                    <option value="temporary">TEMPORARY</option>
+                    <option value="blocked">BLOCKED</option>
+                </select>
+            </div>
+            <div class="additional-fields">
+                <label for="img">Photo:</label>
+                <input type="file" id="photo" name="photo" accept="image/*" placeholder="Photo" required />
 
-        <input type="submit" name="submit" value="Registration" />
+            </div>
+            <input type="submit" name="submit" id="registration" value="Registration" />
+        </div>
     </form>
 </body>
 
