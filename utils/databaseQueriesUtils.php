@@ -1,7 +1,7 @@
 <?php
 include '../configuration/db_config.php';
-include '../fmi_parking/utils/utils.php';
-include '../fmi_parking/utils/messageUtils.php';
+include '../utils/utils.php';
+include '../utils/messageUtils.php';
 include '../models/user.php';
 include '../models/lecturer.php';
 include '../models/course.php';
