@@ -39,15 +39,16 @@ if (!isset($_SESSION)) {
 
 <head>
     <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+    <link rel="stylesheet" type="text/css" href="../styles/fmi-parking-style.css">
     <link rel="stylesheet" type="text/css" href="../styles/my-profile.css">
     <title>My profile</title>
 </head>
 
 <body>
-    <div class="content">
-        <div class="user-info">
+    <div class="my-profile-wrapper">
+        <div class="user-info-wrapper">
             <img src="<?php echo $photoPath ?>">
-            <div class="info">
+            <div class="info-wrapper">
                 <h2>My info</h2>
                 <label><?php echo "Status: $userStatusLowerCase" ?></label>
                 <label><?php echo "Parking points: $userPoints" ?></label>
@@ -65,7 +66,7 @@ if (!isset($_SESSION)) {
         ?>
 
         <h4><?php echo "My profile was viewed by the following users: <br>" ?></h4>
-        <table id="viewers">
+        <table class="table-style">
             <thead>
                 <tr>
                     <th>Firstname</th>

@@ -1,34 +1,24 @@
-body {
-    background-image: url('../assets/background.png');
-    background-size: 100% 100%;
-    background-attachment: fixed;
-    background-repeat: no-repeat;
-}
-
-img {
+#qrCodeImage {
     margin-top: 10px;
     margin-bottom: 10px;
-    width: 200px;
+    width: 250px;
 }
 
-button {
-    margin-left: 45px;
-    display: block;
-    background: #cdd7ec;
-    border: #0f0f0f 1px solid;
-    width: 90px;
-    color: #ffffff;
-    border-radius: 4px;
-    font-weight: 900;
-    font-size: 16px;
-    cursor: pointer;
+#print,
+#scan {
+    background-color: #555555;
+    border: #0f0f0fbd 1px solid;
+    width: 120px;
+    height: 40px;
+    margin-right: 5px;
 }
 
-button:hover {
-    background: #9da7bb;
+#print:hover,
+#scan:hover {
+    background: #bbbaba;
 }
 
-i {
+#printer-icon {
     font-size: 20px;
     font-style: normal;
 }

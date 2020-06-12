@@ -97,15 +97,16 @@ if (isLoggedInUser()) {
 
 <head>
     <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+    <link rel="stylesheet" type="text/css" href="../styles/fmi-parking-style.css">
     <link rel="stylesheet" type="text/css" href="../styles/view-user-profile.css">
     <title>User profile</title>
 </head>
 
 <body>
-    <div class="content">
-        <div class="user-info">
-            <img src="<?php echo $photoPath ?>">
-            <div class="info">
+    <div class="user-wrapper">
+        <div class="user-wrapper-info">
+            <img id="user-image" src="<?php echo $photoPath ?>">
+            <div class="wrapper-info">
                 <h2>User info</h2>
                 <label><?php echo "Name: $firstname $lastname" ?></label>
                 <label><?php echo "Email: $email" ?></label>

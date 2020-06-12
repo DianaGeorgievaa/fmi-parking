@@ -20,15 +20,16 @@ include '../views/menu.php';
 
 <head>
     <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+    <link rel="stylesheet" type="text/css" href="../styles/fmi-parking-style.css">
     <link rel="stylesheet" type="text/css" href="../styles/view-all-users.css">
     <script type="text/javascript" src="../js/user-profile-redirection.js"></script>
     <title>User profile</title>
 </head>
 
 <body>
-    <div class="content">
+    <div class="all-users-wrapper">
         <h3><?php echo "The registred users in the system are: <br>" ?></h3>
-        <table id="users">
+        <table class="table-style">
             <thead>
                 <tr>
                     <th>Photo</th>
@@ -42,7 +43,7 @@ include '../views/menu.php';
                     $currentUserPhotoPath = Utils::USER_PHOTO_FOLDER_PATH . $users['photo_name'];
                 ?>
                     <tr <?php echo "onclick='showUserProfile(".$currentUserId.")'" ?>>
-                        <td><img src="<?php echo $currentUserPhotoPath ?>"></td>
+                        <td><img id="user-image" src="<?php echo $currentUserPhotoPath ?>"></td>
                         <td><?= $users['first_name'] . ' ' . $users['last_name'] ?></td>
                     </tr>
                 <?php }

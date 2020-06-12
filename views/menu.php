@@ -32,7 +32,7 @@ function getGreetingMessage()
     <header>
         <div class="navbar">
             <?php if (isLoggedInUser()) { ?>
-                <a href="../views/index.php">FMI Parking</a>
+                <a href="../views/main.php">FMI Parking</a>
             <?php } ?>
             <?php if (isLoggedInUser()) { ?>
                 <?php if (isLoggedInAdmin()) { ?>
@@ -45,6 +45,7 @@ function getGreetingMessage()
                     </li>
                 <?php } else { ?>
                     <a class="nav-link" href="../views/parking-spot.php">View parking spots</a>
+                    <a class="nav-link" href="../views/scancode.php">Scan code</a>
                 <?php } ?>
                 <a href="../views/view-all-users.php">View users</a>
             <?php } ?>

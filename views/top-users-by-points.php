@@ -18,15 +18,16 @@ include '../views/menu.php';
 
 <head>
     <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+    <link rel="stylesheet" type="text/css" href="../styles/fmi-parking-style.css">
     <link rel="stylesheet" type="text/css" href="../styles/top-users.css">
     <script type="text/javascript" src="../js/user-profile-redirection.js"></script>
     <title>My profile</title>
 </head>
 
 <body>
-    <div class="content">
+    <div class="top-users-wrapper">
         <h2><?php echo "The top 3 users by parking points are: <br>" ?></h2>
-        <table id="top-users">
+        <table class="table-style">
             <thead>
                 <tr>
                     <th>Name</th>

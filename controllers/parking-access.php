@@ -3,9 +3,9 @@ include '../fmi_parking/utils/utils.php';
 include '../configuration/db_config.php';
 include '../utils/tableNames.php';
 
-if ($_POST && isLoggedInUser()) {
-    $qrCode = file_get_contents('php://input');
-    $user = getUserByQRCode($qrCode);
+if (isLoggedInUser()) {
+    $userQrCode = $_REQUEST['userQrCode'];
+    $user = getUserByQRCode($userQrCode);
     $status = $user['status'];
     $userId = $user['status'];
 

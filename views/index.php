@@ -3,6 +3,7 @@
 
 <head>
     <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+    <link rel="stylesheet" type="text/css" href="../styles/fmi-parking-style.css">
     <link rel="stylesheet" type="text/css" href="../styles/index.css">
     <title>FMI parking</title>
 </head>

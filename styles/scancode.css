@@ -1,0 +1,9 @@
+.scan-code-wrapper {
+    margin-top: 10px;
+}
+
+#qr-video {
+    width: 500px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
