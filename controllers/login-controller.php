@@ -6,12 +6,12 @@ $password = $_POST["password"];
 $hashedPassword = DatabaseQueriesUtils::getHashedPassword($email);
 
 if ($hashedPassword == "") {
-    die("Invalid credentials.");
+    Utils::showMessage(MessageUtils::INVALID_CREDENTIALS_MESSAGE, false);
 }
 
 if (password_verify($password, $hashedPassword)) {
     $user = DatabaseQueriesUtils::getUserByEmail($email);
-    
+
     $email = $user['email'];
     $firstname = $user['first_name'];
     $lastname = $user['last_name'];
@@ -24,5 +24,5 @@ if (password_verify($password, $hashedPassword)) {
     $_SESSION["status"] = $status;
     header("Location:" . '../views/main.php');
 } else {
-    echo ("Invalid credentials.");
+    Utils::showMessage(MessageUtils::INVALID_CREDENTIALS_MESSAGE, false);
 }

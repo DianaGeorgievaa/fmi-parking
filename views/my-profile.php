@@ -1,5 +1,4 @@
 <?php
-include '../utils/utils.php';
 include '../utils/databaseQueriesUtils.php';
 include '../views/menu.php';
 
@@ -55,7 +54,7 @@ if (isLoggedInUser()) {
                         </tr>
                     <?php }
                 } else { ?>
-                    <label><?php echo "You should br logged in!" ?></label>
+                    <label><?php echo "You should be logged in!" ?></label>
                 <?php } ?>
         </div>
     </body>

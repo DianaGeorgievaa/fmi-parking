@@ -1,12 +1,12 @@
 <?php
-include '../utils/utils.php';
 include '../utils/databaseQueriesUtils.php';
 include '../views/menu.php';
 
 if (isLoggedInUser()) {
     $viewedUserId = $_REQUEST['viewedUserId'];
     $user = DatabaseQueriesUtils::getUserByUserId($viewedUserId);
-    
+
+    $userId = $user['user_id'];
     $firstname = $user['first_name'];
     $lastname = $user['last_name'];
     $email = $user['email'];
@@ -20,7 +20,7 @@ if (isLoggedInUser()) {
 
     $userParkingInfo = DatabaseQueriesUtils::getUserParkingInfo($viewedUserId);
     $parkingSpot = "";
-    if($userParkingInfo != ""){
+    if ($userParkingInfo != "") {
         $parkingSpotId = $userParkingInfo['parking_spot_id'];
         $parkingSpot = DatabaseQueriesUtils::getParkingSpotById($parkingSpotId);
     }
@@ -56,6 +56,26 @@ if (isLoggedInUser()) {
                         } ?></label>
             </div>
         </div>
+        <table class="table-style">
+            <thead>
+                <tr>
+                    <th>Course</th>
+                    <th>Day</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                $courseIds = DatabaseQueriesUtils::getUserCourseIds($userId);
+                if($courseIds == ""){
+                    return;
+                }
+                $courses = DatabaseQueriesUtils::getUserCourses($courseIds);
+                foreach ($courses as $course) { ?>
+                    <tr>
+                        <td><?= $course['course_title'] ?></td>
+                        <td><?= $course['course_day'] . ', ' . $course['start_time'] . '-' . $course['end_time'] ?></td>
+                    </tr>
+                <?php } ?>
     </div>
 </body>
 

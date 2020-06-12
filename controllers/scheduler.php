@@ -1,7 +1,4 @@
 <?php
-include '../fmi_parking/models/lecturer.php';
-include '../fmi_parking/models/course.php';
-include '../fmi_parking/utils/utils.php';
 include '../utils/databaseQueriesUtils.php';
 
 define("NAME_PATTERN", '/^[A-Z][a-z]+$/', true);
@@ -34,7 +31,7 @@ if ($_POST) {
         $scheduler = $_FILES[SCHEDULER_FIELDNAME];
         constructScheduler();
     } else {
-        //TODO you are not logged in as admin
+        Utils::showMessage(MessageUtils::UPLOADING_SCHEDULER_ERROR_MESSAGE, false);
     }
 }
 
@@ -47,14 +44,14 @@ function validateSchedulerFormat()
 {
     $schedulerErrors = $_FILES[SCHEDULER_FIELDNAME]["error"];
     if ($schedulerErrors == UPLOAD_ERR_NO_FILE) {
-        die("No scheduler choose. Please select the scheduler!");
+        Utils::showMessage(MessageUtils::NOT_SELECTED_SCHEDULER_ERROR_MESSAGE, false);
     }
 
     $info = pathinfo($_FILES[SCHEDULER_FIELDNAME]['name']);
     $extension = $info['extension'];
     global $scheduler_formats;
     if (!in_array($extension, $scheduler_formats)) {
-        die("The uploaded scheduler is not in valid format!");
+        Utils::showMessage(MessageUtils::INVALID_SCHEDULER_FORMAT_ERROR_MESSAGE, false);
     }
 }
 

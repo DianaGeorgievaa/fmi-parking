@@ -1,6 +1,4 @@
     <?php
-    include '../models/user.php';
-    include '../utils/utils.php';
     include '../utils/databaseQueriesUtils.php';
     include '../lib/phpqrcode-2010100721_1.1.4/phpqrcode/qrlib.php';
 
@@ -45,11 +43,9 @@
             $qrFilePath = QR_CODES_FOLDER_PATH . $qrCodeNameValue;
             QRcode::png($qrCodeNameValue, $qrFilePath);
 
-            // TODO 
-            echo ("Success! You are registered with $email with status: $status");
-            header("Location:" . '../views/login.html');
+            Utils::showMessage(MessageUtils::SUCCESSFUL_REGISTRATION_MESSAGE, true);
         } else {
-            echo ("The email is already existing.");
+            Utils::showMessage(MessageUtils::UNSUCCESSFUL_REGISTRATION_MESSAGE, false);
         }
     }
 
@@ -126,13 +122,13 @@
         $photoFormats = array("png", "jpeg", "jpg");
 
         if ($photoUploadErrors == UPLOAD_ERR_NO_FILE) {
-            die("The photo is required!");
+            Utils::showMessage(MessageUtils::REQUIRED_PHOTO_MESSAGE, false);
         }
         if ($photoUploadErrors == UPLOAD_ERR_NO_TMP_DIR || $photoUploadErrors == UPLOAD_ERR_CANT_WRITE) {
-            die("Error occured while uploading the image! Please try again later!");
+            Utils::showMessage(MessageUtils::UPLOADING_PHOTO_ERROR_MESSAGE, false);
         }
         if (!in_array($photoType, $photoFormats)) {
-            die("The image is in wrong format! The allowed formats are: png, jpg and jpeg!");
+            Utils::showMessage(MessageUtils::WRONG_FORMAT_PHOTO_ERROR_MESSAGE, false);
         }
     }
 
@@ -140,7 +136,7 @@
     {
         if ($photoUploadErrors == UPLOAD_ERR_OK) {
             if (!move_uploaded_file($_FILES[PHOTO_FIELD]["tmp_name"], $photoTarget)) {
-                die("Error occured while uploading the image! Please try again!");
+                Utils::showMessage(MessageUtils::UPLOADING_PHOTO_ERROR_MESSAGE, false);
             }
         }
     }
@@ -151,5 +147,4 @@
             mkdir($folderPath, 777);
         }
     }
-
     ?>

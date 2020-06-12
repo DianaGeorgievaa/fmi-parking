@@ -1,5 +1,7 @@
 <?php
 include '../configuration/db_config.php';
+include '../fmi_parking/utils/utils.php';
+include '../fmi_parking/utils/messageUtils.php';
 include '../models/user.php';
 include '../models/lecturer.php';
 include '../models/course.php';
@@ -7,7 +9,7 @@ include '../utils/tableNames.php';
 
 class DatabaseQueriesUtils
 {
-    public static function saveUser(User $user)
+    public static function saveUser($user)
     {
         $table = TableNames::USERS;
         $sql = "INSERT INTO $table (first_name, last_name, email, password, status, photo_name, points, qr_code) 
@@ -23,7 +25,7 @@ class DatabaseQueriesUtils
         $preparedSql->bindParam(':photoName', $user->getPhotoName());
         $preparedSql->bindParam(':points', $user->getPoints());
         $preparedSql->bindParam(':qrCode', $user->getQrCode());
-        $preparedSql->execute() or die("Failed to save user in DB!");
+        $preparedSql->execute() or Utils::showMessage(MessageUtils::DATABASE_SAVE_INFORMATION_ERROR_MESSAGE, false);
     }
 
     public static function saveScheduler(Course $course, $lectureId)
@@ -38,7 +40,7 @@ class DatabaseQueriesUtils
         $preparedSql->bindParam(':courseDay', $course->getCourseDay());
         $preparedSql->bindParam(':startTime', $course->getStartTime());
         $preparedSql->bindParam(':endTime', $course->getEndTime());
-        $preparedSql->execute() or die("Failed to save DB!");
+        $preparedSql->execute() or Utils::showMessage(MessageUtils::DATABASE_SAVE_INFORMATION_ERROR_MESSAGE, false);
 
         $courseId = $connection->lastInsertId();
         DatabaseQueriesUtils::insertCourseAndLecture($lectureId, $courseId);
@@ -54,7 +56,7 @@ class DatabaseQueriesUtils
         $preparedSql = $connection->prepare($insertQuery);
         $preparedSql->bindParam(':courseId', $courseId);
         $preparedSql->bindParam(':lectureId', $lectureId);
-        $preparedSql->execute() or die("Failed to save in DB!");
+        $preparedSql->execute() or Utils::showMessage(MessageUtils::DATABASE_SAVE_INFORMATION_ERROR_MESSAGE, false);
     }
 
     public static function isExistingEmail($email)
@@ -65,9 +67,9 @@ class DatabaseQueriesUtils
         $connection = getDatabaseConnection();
         $preparedSql = $connection->prepare($sql);
         $preparedSql->bindParam(':email', $email);
-        $preparedSql->execute() or die("Failed to check if email exist.");
+        $preparedSql->execute() or Utils::showMessage(MessageUtils::DATABASE_GET_INFORMATION_ERROR_MESSAGE, false);
 
-        $result = $preparedSql->fetchAll();
+        $result = $preparedSql->fetchAll() or Utils::showMessage(MessageUtils::GET_USER_ERROR_MESSAGE, false);;
 
         return count($result) != 0;
     }
@@ -81,11 +83,11 @@ class DatabaseQueriesUtils
         $connection = getDatabaseConnection();
         $getHashedPassword = $connection->prepare($sqlQueryForPassword);
         $getHashedPassword->bindParam(':email', $email);
-        $getHashedPassword->execute() or die("Invalid credentials.");
+        $getHashedPassword->execute() or Utils::showMessage(MessageUtils::DATABASE_GET_INFORMATION_ERROR_MESSAGE, false);
 
         $hashedPassword = "";
         if ($getHashedPassword->rowCount() != 0) {
-            $result = $getHashedPassword->fetch(PDO::FETCH_BOTH);
+            $result = $getHashedPassword->fetch(PDO::FETCH_BOTH) or Utils::showMessage(MessageUtils::GET_USER_ERROR_MESSAGE, false);;;
             $hashedPassword = $result['password'];
         }
 
@@ -100,8 +102,8 @@ class DatabaseQueriesUtils
         $connection = getDatabaseConnection();
         $resultSet = $connection->prepare($sql);
         $resultSet->bindParam(':userId', $userId);
-        $resultSet->execute() or die("Failed to query from DB!");
-        $user = $resultSet->fetch(PDO::FETCH_ASSOC) or die("Failed to get user.");
+        $resultSet->execute() or Utils::showMessage(MessageUtils::DATABASE_GET_INFORMATION_ERROR_MESSAGE, false);
+        $user = $resultSet->fetch(PDO::FETCH_ASSOC) or Utils::showMessage(MessageUtils::GET_USER_ERROR_MESSAGE, false);
 
         return $user;
     }
@@ -114,8 +116,8 @@ class DatabaseQueriesUtils
         $connection = getDatabaseConnection();
         $resultSet = $connection->prepare($sql);
         $resultSet->bindParam(':email', $email);
-        $resultSet->execute() or die("Failed to query from DB!");
-        $user = $resultSet->fetch(PDO::FETCH_ASSOC) or die("Failed to get user.");
+        $resultSet->execute() or Utils::showMessage(MessageUtils::DATABASE_GET_INFORMATION_ERROR_MESSAGE, false);
+        $user = $resultSet->fetch(PDO::FETCH_ASSOC) or Utils::showMessage(MessageUtils::GET_USER_ERROR_MESSAGE, false);
 
         return $user;
     }
@@ -131,13 +133,13 @@ class DatabaseQueriesUtils
         $preparedSql = $connection->prepare($selectUserQuery);
         $preparedSql->bindParam(':firstName', $firstNamelecture);
         $preparedSql->bindParam(':lastName', $lastNamelecture);
-        $preparedSql->execute() or die("Failed to get lecture from DB!");
-        
+        $preparedSql->execute() or Utils::showMessage(MessageUtils::DATABASE_GET_INFORMATION_ERROR_MESSAGE, false);
+
         if ($preparedSql->rowCount() == 0) {
             return "";
         }
 
-        $firstRow = $preparedSql->fetch(PDO::FETCH_ASSOC);
+        $firstRow = $preparedSql->fetch(PDO::FETCH_ASSOC) or Utils::showMessage(MessageUtils::GET_USER_ERROR_MESSAGE, false);
 
         return $firstRow['user_id'];
     }
@@ -150,8 +152,8 @@ class DatabaseQueriesUtils
         $connection = getDatabaseConnection();
         $resultSet = $connection->prepare($sql);
         $resultSet->bindParam(':qrCode', $qrCode);
-        $resultSet->execute() or die("Failed to query from DB!");
-        $user = $resultSet->fetch(PDO::FETCH_ASSOC) or die("Failed to get user.");
+        $resultSet->execute() or Utils::showMessage(MessageUtils::DATABASE_GET_INFORMATION_ERROR_MESSAGE, false);
+        $user = $resultSet->fetch(PDO::FETCH_ASSOC) or Utils::showMessage(MessageUtils::GET_USER_ERROR_MESSAGE, false);
 
         return $user;
     }
@@ -164,8 +166,8 @@ class DatabaseQueriesUtils
         $connection = getDatabaseConnection();
         $resultSet = $connection->prepare($sql);
         $resultSet->bindParam(':email', $logedinUserEmail);
-        $resultSet->execute() or die("Failed to query from DB!");
-        $users = $resultSet->fetchAll(PDO::FETCH_ASSOC) or die("Failed to get users.");
+        $resultSet->execute() or Utils::showMessage(MessageUtils::DATABASE_GET_INFORMATION_ERROR_MESSAGE, false);
+        $users = $resultSet->fetchAll(PDO::FETCH_ASSOC) or Utils::showMessage(MessageUtils::GET_USERS_ERROR_MESSAGE, false);;
 
         return $users;
     }
@@ -177,8 +179,8 @@ class DatabaseQueriesUtils
 
         $connection = getDatabaseConnection();
         $resultSet = $connection->prepare($sql);
-        $resultSet->execute() or die("Failed to query from DB!");
-        $topUsers = $resultSet->fetchAll(PDO::FETCH_ASSOC) or die("Failed to get top users!");
+        $resultSet->execute() or Utils::showMessage(MessageUtils::DATABASE_GET_INFORMATION_ERROR_MESSAGE, false);;
+        $topUsers = $resultSet->fetchAll(PDO::FETCH_ASSOC) or Utils::showMessage(MessageUtils::GET_TOP_USERS_ERROR_MESSAGE, false);;
 
         return $topUsers;
     }
@@ -194,7 +196,7 @@ class DatabaseQueriesUtils
         $resultSet = $connection->prepare($sql);
         $resultSet->bindParam(':parkingDateIn', $currentDate);
         $resultSet->bindParam(':userId', $userId);
-        $resultSet->execute() or die("Failed to query from DB!");
+        $resultSet->execute() or Utils::showMessage(MessageUtils::DATABASE_SAVE_INFORMATION_ERROR_MESSAGE, false);
     }
 
     public static function getUserParkingInfo($userId)
@@ -205,13 +207,13 @@ class DatabaseQueriesUtils
         $connection = getDatabaseConnection();
         $resultSet = $connection->prepare($sql);
         $resultSet->bindParam(':userId', $userId);
-        $resultSet->execute() or die("Failed to query from DB!");
+        $resultSet->execute() or Utils::showMessage(MessageUtils::DATABASE_GET_INFORMATION_ERROR_MESSAGE, false);
 
         if ($resultSet->rowCount() == 0) {
             return "";
         }
 
-        return $resultSet->fetch(PDO::FETCH_ASSOC) or die("Failed to get user parking info.");
+        return $resultSet->fetch(PDO::FETCH_ASSOC) or Utils::showMessage(MessageUtils::GET_USER_PARKIN_INFO_ERROR_MESSAGE, false);;;
     }
 
     public static function deleteUserParkingInfo($userId)
@@ -222,7 +224,7 @@ class DatabaseQueriesUtils
         $connection = getDatabaseConnection();
         $resultSet = $connection->prepare($sql);
         $resultSet->bindParam(':userId', $userId);
-        $resultSet->execute() or die("Failed to query from DB!");
+        $resultSet->execute() or Utils::showMessage(MessageUtils::DATABASE_DELETE_INFORMATION_ERROR_MESSAGE, false);
     }
 
     public static function getParkingSpotById($parkingSpotId)
@@ -233,13 +235,13 @@ class DatabaseQueriesUtils
         $connection = getDatabaseConnection();
         $resultSet = $connection->prepare($sql);
         $resultSet->bindParam(':parkingSpotId', $parkingSpotId);
-        $resultSet->execute() or die("Failed to query from DB!");
+        $resultSet->execute() or Utils::showMessage(MessageUtils::DATABASE_GET_INFORMATION_ERROR_MESSAGE, false);
 
         if ($resultSet->rowCount() == 0) {
             return "";
         }
 
-        return $resultSet->fetch(PDO::FETCH_ASSOC) or die("Failed to get user.");
+        return $resultSet->fetch(PDO::FETCH_ASSOC) or Utils::showMessage(MessageUtils::GET_USER_PARKIN_SPOT_ERROR_MESSAGE, false);
     }
 
     public static function saveViewer($viewedUserId)
@@ -260,7 +262,7 @@ class DatabaseQueriesUtils
         $resultSet->bindParam(':email', $viewerEmail);
         $resultSet->bindParam(':viewTime', $viewTime);
         $resultSet->bindParam(':userId', $viewedUserId);
-        $resultSet->execute() or die("Failed to query from DB!");
+        $resultSet->execute() or Utils::showMessage(MessageUtils::DATABASE_SAVE_INFORMATION_ERROR_MESSAGE, false);
     }
 
     public static function getUserProfileViewers($userId)
@@ -271,8 +273,8 @@ class DatabaseQueriesUtils
         $connection = getDatabaseConnection();
         $resultSet = $connection->prepare($sql);
         $resultSet->bindParam(':userId', $userId);
-        $resultSet->execute() or die("Failed to query from DB!");
-        $viewers = $resultSet->fetchAll(PDO::FETCH_ASSOC) or die("Failed to get viewers!");
+        $resultSet->execute() or Utils::showMessage(MessageUtils::DATABASE_GET_INFORMATION_ERROR_MESSAGE, false);
+        $viewers = $resultSet->fetchAll(PDO::FETCH_ASSOC) or Utils::showMessage(MessageUtils::GET_VIEWERS_ERROR_MESSAGE, false);
 
         return $viewers;
     }
@@ -284,39 +286,14 @@ class DatabaseQueriesUtils
 
         $connection = getDatabaseConnection();
         $resultSet = $connection->prepare($sql);
-        $resultSet->execute() or die("Failed to query from DB!");
-        $numberOfFreeParkingSpots = $resultSet->fetch(PDO::FETCH_ASSOC) or die("Failed to get courses.");
+        $resultSet->execute() or Utils::showMessage(MessageUtils::DATABASE_GET_INFORMATION_ERROR_MESSAGE, false);
+        $numberOfFreeParkingSpots = $resultSet->fetch(PDO::FETCH_ASSOC) or Utils::showMessage(MessageUtils::GET_USER_PARKIN_INFO_ERROR_MESSAGE, false);
 
         return $numberOfFreeParkingSpots;
     }
 
-    public static function updateUserPoints($userId, $parkingDateIn, $status)
+    public static function updateUserPoints($userId)
     {
-        $points = 0;
-        $currentDate = strtotime(date("Y-m-d H:i:s"));
-        if ($status == 'PERMANENT') {
-            $dateIn = strtotime($parkingDateIn);
-            $datediff = $currentDate - $dateIn;
-            $difference = floor($datediff / (60 * 60 * 24));
-            if ($difference > 1) {
-                $points -= 1;
-            } else {
-                $points += 1;
-            }
-        } else if ($status == 'TEMPORARY') {
-            $firstTimestamp = strtotime($currentDate);
-            $courseIds = DatabaseQueriesUtils::getUserCourseIds($userId);
-            $courses = DatabaseQueriesUtils::getUserCourses($courseIds);
-            $lecture = DatabaseQueriesUtils::getLectureAtThatTime($courses);
-            $secondTimestamp = strtotime($lecture['end_time']);
-            $difference = abs($firstTimestamp - $secondTimestamp);
-            if ($difference > 30) {
-                $points -= 1;
-            } else {
-                $points += 1;
-            }
-        }
-
         $table = TableNames::USERS;
         $sql = "UPDATE $table SET points = :points WHERE user_id = :userId;";
 
@@ -324,7 +301,7 @@ class DatabaseQueriesUtils
         $resultSet = $connection->prepare($sql);
         $resultSet->bindParam(':points', $points);
         $resultSet->bindParam(':userId', $userId);
-        $resultSet->execute() or die("Failed to query from DB!");
+        $resultSet->execute() or Utils::showMessage(MessageUtils::DATABASE_UPDATE_INFORMATION_ERROR_MESSAGE, false);
     }
 
     public static function getUserCourseIds($userId)
@@ -335,10 +312,13 @@ class DatabaseQueriesUtils
         $connection = getDatabaseConnection();
         $resultSet = $connection->prepare($sql);
         $resultSet->bindParam(':userId', $userId);
-        $resultSet->execute() or die("Failed to query from DB!");
-        $courseIds = $resultSet->fetch(PDO::FETCH_ASSOC) or die("Failed to get courses.");
+        $resultSet->execute() or Utils::showMessage(MessageUtils::DATABASE_GET_INFORMATION_ERROR_MESSAGE, false);
 
-        return $courseIds;
+        if ($resultSet->rowCount() == 0) {
+            return "";
+        }
+
+        return $resultSet->fetchAll(PDO::FETCH_ASSOC) or Utils::showMessage(MessageUtils::GET_COURSES_ERROR_MESSAGE, false);
     }
 
     public static function getUserCourses($courseIds)
@@ -352,28 +332,11 @@ class DatabaseQueriesUtils
         $userCourses = array();
         foreach ($courseIds as $course) {
             $resultSet->bindParam(':userId', $course['course_id']);
-            $resultSet->execute() or die("Failed to query from DB!");
-            $currentCourse = $resultSet->fetch(PDO::FETCH_ASSOC) or die("Failed to get courses.");
+            $resultSet->execute() or Utils::showMessage(MessageUtils::DATABASE_GET_INFORMATION_ERROR_MESSAGE, false);
+            $currentCourse = $resultSet->fetch(PDO::FETCH_ASSOC) or Utils::showMessage(MessageUtils::GET_COURSES_ERROR_MESSAGE, false);
             $userCourses[] = $currentCourse;
         }
 
         return $userCourses;
-    }
-
-    public static function getLectureAtThatTime($courses)
-    {
-        $currentDate = date("Y-m-d H:i:s");
-        $currentWeekDay = strtoupper(date("l"));
-        $currentDateTimestamp = strtotime($currentDate);
-        foreach ($courses as $course) {
-            $courseDay = $course['course_day'];
-            $startTimeCourseTimestamp = strtotime($course['start_time']);
-            $difference = abs($currentDateTimestamp - $startTimeCourseTimestamp);
-            if ($difference <= 30 && $currentWeekDay == $courseDay) {
-                return $course;
-            }
-        }
-
-        return "";
     }
 }

@@ -58,6 +58,7 @@ function getGreetingMessage()
                     <div class="dropdown-content">
                         <?php if (!isLoggedInAdmin()) { ?>
                             <a href="../views/my-profile.php">My profile</a>
+                            <a href="../views/my-courses.php">My courses</a>
                         <?php } ?>
                         <a href="../views/logout.php">Logout</a>
                     </div>
