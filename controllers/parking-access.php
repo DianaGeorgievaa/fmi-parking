@@ -1,6 +1,5 @@
 <?php
 include '../fmi_parking/utils/utils.php';
-include '../utils/tableNames.php';
 include '../utils/databaseQueriesUtils.php';
 
 if (isLoggedInUser()) {

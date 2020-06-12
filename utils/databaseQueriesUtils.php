@@ -1,9 +1,9 @@
 <?php
 include '../configuration/db_config.php';
-include '../fmi_parking/models/user.php';
-include '../fmi_parking/models/lecturer.php';
-include '../fmi_parking/models/course.php';
-include '../fmi_parking/utils/tableNames.php';
+include '../models/user.php';
+include '../models/lecturer.php';
+include '../models/course.php';
+include '../utils/tableNames.php';
 
 class DatabaseQueriesUtils
 {

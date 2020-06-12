@@ -1,6 +1,5 @@
 <?php
 class Course {
-    private $courseId;
     private $courseTitle;
     private $courseDay;
     private $startTime;
@@ -12,16 +11,6 @@ class Course {
         $this->courseDay = $courseDay;
         $this->startTime = $startTime;
         $this->endTime = $endTime;
-    }
-
-    public function getCourseId()
-    {
-        return $this->courseId;
-    }
-
-    public function setCourseId($courseId)
-    {
-        $this->courseId = $courseId;
     }
 
     function getCourseTitle()

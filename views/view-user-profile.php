@@ -1,5 +1,4 @@
 <?php
-include '../utils/tableNames.php';
 include '../utils/utils.php';
 include '../utils/databaseQueriesUtils.php';
 include '../views/menu.php';

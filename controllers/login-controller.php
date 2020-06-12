@@ -1,5 +1,4 @@
 <?php
-include '../utils/tableNames.php';
 include '../utils/databaseQueriesUtils.php';
 
 $email = $_POST["email"];

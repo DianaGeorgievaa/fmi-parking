@@ -1,6 +1,5 @@
     <?php
-    include '../utils/tableNames.php';
-    include '../fmi_parking/models/user.php';
+    include '../models/user.php';
     include '../utils/utils.php';
     include '../utils/databaseQueriesUtils.php';
     include '../lib/phpqrcode-2010100721_1.1.4/phpqrcode/qrlib.php';
@@ -39,7 +38,7 @@
 
         if (!DatabaseQueriesUtils::isExistingEmail($email)) {
             $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
- 
+
             $user = new User($firstname, $lastname, $email, $hashedPassword, $status, $photo, $points, $qrCodeNameValue);
             DatabaseQueriesUtils::saveUser($user);
 

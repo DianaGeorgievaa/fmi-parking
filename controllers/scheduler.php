@@ -1,12 +1,8 @@
 <?php
-
-include '../fmi_parking/models/weeklyScheduler.php';
-include '../fmi_parking/configuration/db_config.php';
 include '../fmi_parking/models/lecturer.php';
 include '../fmi_parking/models/course.php';
 include '../fmi_parking/utils/utils.php';
 include '../utils/databaseQueriesUtils.php';
-include '../fmi_parking/utils/tableNames.php';
 
 define("NAME_PATTERN", '/^[A-Z][a-z]+$/', true);
 define("COURSE_PATTERN", '/^[a-zA-Z0-9 ]+$/', true);
