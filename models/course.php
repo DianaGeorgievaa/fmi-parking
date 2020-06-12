@@ -6,9 +6,8 @@ class Course {
     private $startTime;
     private $endTime;
 
-    public function __construct($courseId, $courseTitle, $courseDay, $startTime, $endTime)
+    public function __construct($courseTitle, $courseDay, $startTime, $endTime)
     {
-        $this->courseId = $courseId;
         $this->courseTitle = $courseTitle;
         $this->courseDay = $courseDay;
         $this->startTime = $startTime;

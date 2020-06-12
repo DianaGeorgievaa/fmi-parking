@@ -1,5 +1,9 @@
 <?php
 include '../configuration/db_config.php';
+include '../fmi_parking/models/user.php';
+include '../fmi_parking/models/lecturer.php';
+include '../fmi_parking/models/course.php';
+include '../fmi_parking/utils/tableNames.php';
 
 class DatabaseQueriesUtils
 {
@@ -20,6 +24,37 @@ class DatabaseQueriesUtils
         $preparedSql->bindParam(':points', $user->getPoints());
         $preparedSql->bindParam(':qrCode', $user->getQrCode());
         $preparedSql->execute() or die("Failed to save user in DB!");
+    }
+
+    public static function saveScheduler(Course $course, $lectureId)
+    {
+        $connection = getDatabaseConnection();
+        $table = TableNames::COURSES;
+        $insertQuery = "INSERT INTO $table (course_title, course_day, start_time, end_time) 
+                                VALUES (:courseTitle, :courseDay, :startTime, :endTime);";
+
+        $preparedSql = $connection->prepare($insertQuery);
+        $preparedSql->bindParam(':courseTitle', $course->getCourseTitle());
+        $preparedSql->bindParam(':courseDay', $course->getCourseDay());
+        $preparedSql->bindParam(':startTime', $course->getStartTime());
+        $preparedSql->bindParam(':endTime', $course->getEndTime());
+        $preparedSql->execute() or die("Failed to save DB!");
+
+        $courseId = $connection->lastInsertId();
+        DatabaseQueriesUtils::insertCourseAndLecture($lectureId, $courseId);
+    }
+
+    public static function insertCourseAndLecture($lectureId, $courseId)
+    {
+        $connection = getDatabaseConnection();
+        $table = TableNames::USERS_COURSES;
+        $insertQuery = "INSERT INTO $table (course_id, user_id) 
+                                VALUES (:courseId, :lectureId);";
+
+        $preparedSql = $connection->prepare($insertQuery);
+        $preparedSql->bindParam(':courseId', $courseId);
+        $preparedSql->bindParam(':lectureId', $lectureId);
+        $preparedSql->execute() or die("Failed to save in DB!");
     }
 
     public static function isExistingEmail($email)
@@ -83,6 +118,28 @@ class DatabaseQueriesUtils
         $user = $resultSet->fetch(PDO::FETCH_ASSOC) or die("Failed to get user.");
 
         return $user;
+    }
+
+    public static function getLectureIdByNames($firstNamelecture, $lastNamelecture)
+    {
+        $connection = getDatabaseConnection();
+        $table = TableNames::USERS;
+
+        $selectUserQuery = "SELECT user_id, first_name, last_name FROM $table
+                        WHERE first_name=:firstName AND last_name=:lastName;";
+
+        $preparedSql = $connection->prepare($selectUserQuery);
+        $preparedSql->bindParam(':firstName', $firstNamelecture);
+        $preparedSql->bindParam(':lastName', $lastNamelecture);
+        $preparedSql->execute() or die("Failed to get lecture from DB!");
+        
+        if ($preparedSql->rowCount() == 0) {
+            return "";
+        }
+
+        $firstRow = $preparedSql->fetch(PDO::FETCH_ASSOC);
+
+        return $firstRow['user_id'];
     }
 
     public static function getUserByQRCode($qrCode)
@@ -248,9 +305,9 @@ class DatabaseQueriesUtils
             }
         } else if ($status == 'TEMPORARY') {
             $firstTimestamp = strtotime($currentDate);
-            $courseIds = getUserCourseIds($userId);
-            $courses = getUserCourses($courseIds);
-            $lecture = getLectureAtThatTime($courses);
+            $courseIds = DatabaseQueriesUtils::getUserCourseIds($userId);
+            $courses = DatabaseQueriesUtils::getUserCourses($courseIds);
+            $lecture = DatabaseQueriesUtils::getLectureAtThatTime($courses);
             $secondTimestamp = strtotime($lecture['end_time']);
             $difference = abs($firstTimestamp - $secondTimestamp);
             if ($difference > 30) {
@@ -286,7 +343,6 @@ class DatabaseQueriesUtils
 
     public static function getUserCourses($courseIds)
     {
-
         $table = TableNames::COURSES;
         $sql = "SELECT * FROM $table WHERE course_id = :courseId;";
 

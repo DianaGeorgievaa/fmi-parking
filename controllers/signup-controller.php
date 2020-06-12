@@ -1,5 +1,6 @@
     <?php
     include '../utils/tableNames.php';
+    include '../fmi_parking/models/user.php';
     include '../utils/utils.php';
     include '../utils/databaseQueriesUtils.php';
     include '../lib/phpqrcode-2010100721_1.1.4/phpqrcode/qrlib.php';
