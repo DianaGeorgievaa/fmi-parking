@@ -1,6 +1,5 @@
 <?php
 class User {
-    private $userId;
     private $firstName;
     private $lastName;
     private $email;
@@ -10,9 +9,8 @@ class User {
     private $points;
     private $qrCode;
 
-    public function __construct($userId, $firstName, $lastName, $email, $password, $status, $photoName, $points, $qrCode)
+    public function __construct($firstName, $lastName, $email, $password, $status, $photoName, $points, $qrCode)
     {
-        $this->userId = $userId;
         $this->firstName = $firstName;
         $this->lastName = $lastName;
         $this->email = $email;
@@ -21,16 +19,6 @@ class User {
         $this->photoName = $photoName;
         $this->points = $points;
         $this->qrCode = $qrCode;
-    }
-
-    public function getUserId()
-    {
-        return $this->userId;
-    }
-
-    public function setUserId($userId)
-    {
-        $this->userId = $userId;
     }
 
     public function getFirstName()

@@ -1,19 +1,12 @@
 <?php
-
-include '../configuration/db_config.php';
 include '../utils/tableNames.php';
 include '../utils/utils.php';
+include '../utils/databaseQueriesUtils.php';
 include '../views/menu.php';
-?>
-<?php if (isLoggedInUser()) {
-    $logedinUserEmail = $_SESSION["email"];
-    $table = TableNames::USERS;
-    $sql = "SELECT * FROM $table WHERE email != :email;";
 
-    $connection = getDatabaseConnection();
-    $resultSet = $connection->prepare($sql);
-    $resultSet->bindParam(':email', $logedinUserEmail);
-    $resultSet->execute() or die("Failed to query from DB!");
+if (isLoggedInUser()) {
+    $logedinUserEmail = $_SESSION["email"];
+    $users = DatabaseQueriesUtils::getUsersWithouthLoggedinUser($logedinUserEmail);
 ?>
 <!DOCTYPE html>
 <html>
@@ -38,13 +31,13 @@ include '../views/menu.php';
             </thead>
             <tbody>
                 <?php
-                while ($users = $resultSet->fetch(PDO::FETCH_ASSOC)) {
-                    $currentUserId = $users['user_id'];
-                    $currentUserPhotoPath = Utils::USER_PHOTO_FOLDER_PATH . $users['photo_name'];
+                foreach ($users as $user) {
+                    $currentUserId = $user['user_id'];
+                    $currentUserPhotoPath = Utils::USER_PHOTO_FOLDER_PATH . $user['photo_name'];
                 ?>
                     <tr <?php echo "onclick='showUserProfile(".$currentUserId.")'" ?>>
                         <td><img id="user-image" src="<?php echo $currentUserPhotoPath ?>"></td>
-                        <td><?= $users['first_name'] . ' ' . $users['last_name'] ?></td>
+                        <td><?= $user['first_name'] . ' ' . $user['last_name'] ?></td>
                     </tr>
                 <?php }
             } else { ?>

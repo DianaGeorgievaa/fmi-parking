@@ -1,7 +1,7 @@
     <?php
-    include '../configuration/db_config.php';
     include '../utils/tableNames.php';
     include '../utils/utils.php';
+    include '../utils/databaseQueriesUtils.php';
     include '../lib/phpqrcode-2010100721_1.1.4/phpqrcode/qrlib.php';
 
     define("QR_CODES_FOLDER_PATH", "../QRCodes/", true);
@@ -36,23 +36,11 @@
         createFolder(QR_CODES_FOLDER_PATH);
         $qrCodeNameValue = $firstname . $lastname . '.png';
 
-        if (!isExistingEmail($email)) {
-            $connection = getDatabaseConnection();
+        if (!DatabaseQueriesUtils::isExistingEmail($email)) {
             $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-            $table = TableNames::USERS;
-            $sql = "INSERT INTO $table (first_name, last_name, email, password, status, photo_name, points, qr_code) 
-                            VALUES (:firstname, :lastname, :email, :hashedPassword, :status, :photo, :points, :qrCodeNameValue);";
-
-            $preparedSql = $connection->prepare($sql) or die("Error description: " . $connnection->error);
-            $preparedSql->bindParam(':firstname', $firstname);
-            $preparedSql->bindParam(':lastname', $lastname);
-            $preparedSql->bindParam(':email', $email);
-            $preparedSql->bindParam(':hashedPassword', $hashedPassword);
-            $preparedSql->bindParam(':status', $status);
-            $preparedSql->bindParam(':photo', $photo);
-            $preparedSql->bindParam(':points', $points);
-            $preparedSql->bindParam(':qrCodeNameValue', $qrCodeNameValue);
-            $preparedSql->execute() or die("Failed to save DB!" . $preparedSql->error);
+ 
+            $user = new User($firstname, $lastname, $email, $hashedPassword, $status, $photo, $points, $qrCodeNameValue);
+            DatabaseQueriesUtils::saveUser($user);
 
             $qrFilePath = QR_CODES_FOLDER_PATH . $qrCodeNameValue;
             QRcode::png($qrCodeNameValue, $qrFilePath);
@@ -115,20 +103,6 @@
             global $invalidFieldMessages;
             $errors[$formField] = $invalidFieldMessages[$formField];
         }
-    }
-
-    function isExistingEmail($email)
-    {
-        $connection = getDatabaseConnection();
-        $table = TableNames::USERS;
-        $sql = "SELECT * FROM  $table WHERE email = :email;";
-        $preparedSql = $connection->prepare($sql);
-        $preparedSql->bindParam(':email', $email);
-        $preparedSql->execute() or die("Failed to check if email exist.");
-
-        $result = $preparedSql->fetchAll();
-
-        return count($result) !== 0;
     }
 
     function getUploadedPhoto()
