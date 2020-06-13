@@ -1,0 +1,73 @@
+{
+    "user": [{
+            "firstName": "Ivan",
+            "lastName": "Ivanov",
+            "course": [{
+                "courseTitle": "Algebra",
+                "courseDay": "Monday",
+                "startTime": "18:15",
+                "endTime": "20:00"
+            }]
+        },
+        {
+            "firstName": "Hristo",
+            "lastName": "Hristov",
+            "course": [{
+                "courseTitle": "Geometry",
+                "courseDay": "Tuesday",
+                "startTime": "12:15",
+                "endTime": "15:00"
+            }]
+        },
+        {
+            "firstName": "Milen",
+            "lastName": "Petrov",
+            "course": [{
+                "courseTitle": "WEB technologies",
+                "courseDay": "Wednesday",
+                "startTime": "09:15",
+                "endTime": "11:00"
+            }]
+        },
+        {
+            "firstName": "Georgi",
+            "lastName": "Georgiev",
+            "course": [{
+                "courseTitle": "Object oriented programming",
+                "courseDay": "Friday",
+                "startTime": "14:15",
+                "endTime": "17:00"
+            }]
+        },
+        {
+            "firstName": "Plamena",
+            "lastName": "Plamenova",
+            "course": [{
+                "courseTitle": "Operating systems",
+                "courseDay": "Saturday",
+                "startTime": "21:45",
+                "endTime": "22:00"
+            }]
+        },
+        {
+            "firstName": "Iva",
+            "lastName": "Ivanova",
+            "course": [{
+                "courseTitle": "Mobile applications",
+                "courseDay": "Saturday",
+                "startTime": "21:45",
+                "endTime": "22:00"
+            }]
+        },
+        {
+            "firstName": "Daniela",
+            "lastName": "Danielova",
+            "course": [{
+                "courseTitle": "Clean code",
+                "courseDay": "Saturday",
+                "startTime": "21:45",
+                "endTime": "22:00"
+            }]
+        }
+    ]
+}

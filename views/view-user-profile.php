@@ -19,11 +19,11 @@ if (isLoggedInUser()) {
     DatabaseQueriesUtils::saveViewer($viewedUserId);
 
     $userParkingInfo = DatabaseQueriesUtils::getUserParkingInfo($viewedUserId);
-    $parkingSpot = "";
-    if ($userParkingInfo != "") {
-        $parkingSpotId = $userParkingInfo['parking_spot_id'];
-        $parkingSpot = DatabaseQueriesUtils::getParkingSpotById($parkingSpotId);
-    }
+    // $parkingSpot = null;
+    // if ($userParkingInfo != null) {
+    //     $parkingSpotId = $userParkingInfo['parking_spot_id'];
+    //     $parkingSpot = DatabaseQueriesUtils::getParkingSpotById($parkingSpotId);
+    // }
 }
 ?>
 
@@ -47,10 +47,11 @@ if (isLoggedInUser()) {
                 <label><?php echo "Email: $email" ?></label>
                 <label><?php echo "Parking points: $userPoints" ?></label>
                 <label><?php echo "Status: $userStatusLowerCase" ?></label>
-                <label><?php if ($parkingSpot != "") {
-                            $zone = $parkingSpot['zone'];
-                            $parkNumber = $parkingSpot['number'];
-                            echo "The user is parked on parking spot: $zone $parkNumber";
+                <label><?php if ($userParkingInfo != null) {
+                            // $zone = $parkingSpot['zone'];
+                            // $parkNumber = $parkingSpot['number'];
+                            // echo "The user is parked on parking spot: $zone $parkNumber";
+                            echo "<b> The user is in the parking now!</b>";
                         } else {
                             echo "<b> The user is not in the parking now! </b>";
                         } ?></label>
@@ -66,14 +67,17 @@ if (isLoggedInUser()) {
             <tbody>
                 <?php
                 $courseIds = DatabaseQueriesUtils::getUserCourseIds($userId);
-                if($courseIds == ""){
+                if($courseIds == null){
                     return;
                 }
                 $courses = DatabaseQueriesUtils::getUserCourses($courseIds);
-                foreach ($courses as $course) { ?>
+                foreach ($courses as $course) { 
+                    $courseDay = $course['course_day'];
+                    $courseDayLowerCase = ucfirst(strtolower($courseDay));
+                    ?>
                     <tr>
                         <td><?= $course['course_title'] ?></td>
-                        <td><?= $course['course_day'] . ', ' . $course['start_time'] . '-' . $course['end_time'] ?></td>
+                        <td><?= $courseDayLowerCase . ', ' . $course['start_time'] . '-' . $course['end_time'] . ' h' ?></td>
                     </tr>
                 <?php } ?>
     </div>

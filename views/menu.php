@@ -36,7 +36,7 @@ function getGreetingMessage()
             <?php } ?>
             <?php if (isLoggedInUser()) { ?>
                 <?php if (isLoggedInAdmin()) { ?>
-                    <a href="../views/scheduler.php">
+                    <a href="../views/schedule.php">
                         Add semester schedule
                     </a>
                     <a href="../views/top-users-by-points.php">
@@ -48,6 +48,8 @@ function getGreetingMessage()
                     <a class="nav-link" href="../views/scancode.php">Scan code</a>
                 <?php } ?>
                 <a href="../views/view-all-users.php">View users</a>
+                <a class="nav-link" href="../views/weekly-schedule.php">Weekly schedule</a>
+                <a class="nav-link" href="../views/daily-schedule.php">Daily schedule</a>
             <?php } ?>
 
             <?php if (isLoggedInUser()) { ?>

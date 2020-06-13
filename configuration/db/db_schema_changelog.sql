@@ -22,7 +22,7 @@ CREATE TABLE `users` (
     `status` enum('ADMIN', 'PERMANENT', 'TEMPORARY', 'BLOCKED') NOT NULL DEFAULT 'BLOCKED',
     `photo_name` varchar(256) NOT NULL,
     `points` int(11) NOT NULL,
-    `qr_code` varchar(256) NOT NULL,
+    `qr_code` varchar(256),
     PRIMARY KEY (user_id)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8;
 
@@ -69,12 +69,9 @@ ALTER TABLE `parking_spot` ADD CONSTRAINT UC_Parking_Spot UNIQUE(`number`, `zone
 CREATE TABLE `user_parking_info` (
     `user_parking_info_id` int NOT NULL AUTO_INCREMENT,
     `parking_date_in` datetime NOT NULL,
-    `parking_date_out` datetime,
-    `parking_duration` int(11),
-    `is_timed_out` boolean,
+    `end_time_lecture` time,
+    `has_lectures` boolean,
     PRIMARY KEY (user_parking_info_id),
-    `parking_spot_id` int NOT NULL REFERENCES parking_spot(parking_spot_id),
-    CONSTRAINT parking_spot_id UNIQUE (parking_spot_id),
     `user_id` int NOT NULL REFERENCES `users`(`user_id`),
     CONSTRAINT user_id UNIQUE (user_id)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8;

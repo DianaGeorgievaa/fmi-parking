@@ -46,6 +46,9 @@ if (isLoggedInUser()) {
                 </thead>
                 <tbody>
                     <?php
+                    if($viewers == null){
+                        return;
+                    }
                     foreach ($viewers as $viewer) { ?>
                         <tr>
                             <td><?= $viewer['first_name'] . ' ' . $viewer['last_name'] ?></td>

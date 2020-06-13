@@ -1,5 +1,5 @@
 <?php
-$configs = include('database_properties.php');
+$configs = include('../configuration/database_properties.php');
 
 function getDatabaseConnection()
 {

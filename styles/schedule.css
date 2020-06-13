@@ -1,0 +1,17 @@
+.schedule-wrapper {
+    width: 450px;
+}
+
+#schedule-input,
+.schedule-wrapper {
+    margin-top: 10px;
+}
+
+#upload-schedule-button {
+    background-color: #555555;
+    margin-right: 10px;
+}
+
+#upload-schedule-button:hover {
+    background: #bbbaba;
+}

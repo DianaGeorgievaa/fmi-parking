@@ -22,3 +22,12 @@
     font-size: 20px;
     font-style: normal;
 }
+
+#send-email-button {
+    background-color: #4CAF50;
+    border: #31a801bd 1px solid;
+}
+
+#send-email-button:hover {
+    background: #2CC06B;
+}

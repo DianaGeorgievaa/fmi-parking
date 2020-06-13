@@ -13,10 +13,25 @@
 <body>
 
     <?php
-    include '../utils/utils.php';
+    include '../utils/databaseQueriesUtils.php';
+    include '../utils/emailMessages.php';
+    include '../controllers/email-notification.php';
     include '../views/menu.php';
+    
+    if (isset($_POST["send-email"])) {
+        $userId = DatabaseQueriesUtils::getUserIdWithouthLecturesFromUserParkingInfo();
+        if ($userId != null) {
+            $id = $userId['user_id'];
+            $user = DatabaseQueriesUtils::getUserByUserId($id);
+            $userEmail = $user['email'];
+            EmailNotification::sendEmailNotification($userEmail, EmailMessages::EMAIL_PARKING_LEAVING_SUBJECT, EmailMessages::EMAIL_PARKING_LECTURE_BODY);
+        } else {
+            Utils::showMessage(MessageUtils::NO_USERS_WITHOUT_LECTURES_ERROR_MESSAGE, false);
+        }
+    }
 
-    if (isLoggedInUser()) {
+    $userStatus = $_SESSION['status'];
+    if (isLoggedInUser() && $userStatus != 'ADMIN') {
         $userQRCodePath = Utils::QR_CODE_FOLDER_PATH . $_SESSION['firstName'] . $_SESSION['lastName'] . '.png'; ?>
         <div id="reader"></div>
         <div>
@@ -26,8 +41,11 @@
                 <button id="scan" class="button-style">Scan code </button>
             </div>
         </div>
+    <?php } else if ($userStatus == 'ADMIN') { ?>
+        <form method="POST">
+            <button id="send-email-button" name="send-email" class="button-style">Send email for leaving</button>
+        </form>
     <?php } ?>
-
 </body>
 
 </html>

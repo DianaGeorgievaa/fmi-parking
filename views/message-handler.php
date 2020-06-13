@@ -13,7 +13,7 @@ $isSuccess = $_REQUEST['isSuccess'];
     <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
     <link rel="stylesheet" type="text/css" href="../styles/fmi-parking-style.css">
     <link rel="stylesheet" type="text/css" href="../styles/message-handler-style.css">
-    <title>Error</title>
+    <title>FMI Parking</title>
 </head>
 
 <body>

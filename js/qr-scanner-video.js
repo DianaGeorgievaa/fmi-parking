@@ -9,7 +9,9 @@ if (document.querySelector('.scan-code-wrapper')) {
 
     QrScanner.hasCamera().then(hasCamera => deviceHasCamera.textContent = hasCamera);
 
-    const scanner = new QrScanner(video, qrCodeContent => parkingAccess(qrCodeContent));
+    const scanner = new QrScanner(video, qrCodeContent => {
+        parkingAccess(qrCodeContent)
+    });
     scanner.start();
 
     document.getElementById('inversion-mode-select').addEventListener('change', event => {

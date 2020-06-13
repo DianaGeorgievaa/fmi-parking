@@ -32,7 +32,10 @@
         $photo = getUploadedPhoto();
 
         createFolder(QR_CODES_FOLDER_PATH);
-        $qrCodeNameValue = $firstname . $lastname . '.png';
+        $qrCodeNameValue = null;
+        if ($status != 'ADMIN') {
+            $qrCodeNameValue = $firstname . $lastname . '.png';
+        }
 
         if (!DatabaseQueriesUtils::isExistingEmail($email)) {
             $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
@@ -40,9 +43,10 @@
             $user = new User($firstname, $lastname, $email, $hashedPassword, $status, $photo, $points, $qrCodeNameValue);
             DatabaseQueriesUtils::saveUser($user);
 
-            $qrFilePath = QR_CODES_FOLDER_PATH . $qrCodeNameValue;
-            QRcode::png($qrCodeNameValue, $qrFilePath);
-
+            if ($status != 'ADMIN') {
+                $qrFilePath = QR_CODES_FOLDER_PATH . $qrCodeNameValue;
+                QRcode::png($qrCodeNameValue, $qrFilePath);
+            }
             Utils::showMessage(MessageUtils::SUCCESSFUL_REGISTRATION_MESSAGE, true);
         } else {
             Utils::showMessage(MessageUtils::UNSUCCESSFUL_REGISTRATION_MESSAGE, false);

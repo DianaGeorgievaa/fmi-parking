@@ -5,7 +5,7 @@ define("NAME_PATTERN", '/^[A-Z][a-z]+$/', true);
 define("COURSE_PATTERN", '/^[a-zA-Z0-9 ]+$/', true);
 define("TIME_PATTERN", '/^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/', true);
 
-define("SCHEDULER_FIELDNAME", "scheduler");
+define("SCHEDULE_FIELDNAME", "schedule");
 
 define("FIRSTNAME_FIELDNAME", "firstname", true);
 define("LASTNAME_FIELDNAME", "lastname", true);
@@ -15,7 +15,7 @@ define("COURS_START_TIME_FIELDNAME", "startTime", true);
 define("COURS_END_TIME_FIELDNAME", "endTime", true);
 
 $dayOfWeeks = Utils::DAYS_OF_WEEK;
-$scheduler_formats = array("json");
+$schedule_formats = array("json");
 $invalidFieldMessages = array(
     FIRSTNAME_FIELDNAME => "Please insert correct firstname!",
     LASTNAME_FIELDNAME => "Please insert correct lastname!",
@@ -25,11 +25,16 @@ $invalidFieldMessages = array(
     COURS_END_TIME_FIELDNAME => "Please insert correct end time!"
 );
 
+if (!isset($_SESSION)) {
+    session_start();
+}
+
 if ($_POST) {
     if (isLoggedInAdmin()) {
         validateSchedulerFormat();
-        $scheduler = $_FILES[SCHEDULER_FIELDNAME];
+        $scheduler = $_FILES[SCHEDULE_FIELDNAME];
         constructScheduler();
+        Utils::showMessage(MessageUtils::SUCCESSFUL_UPLOADED_SCHEDULER_MESSAGE, true);
     } else {
         Utils::showMessage(MessageUtils::UPLOADING_SCHEDULER_ERROR_MESSAGE, false);
     }
@@ -42,22 +47,25 @@ function isLoggedInAdmin()
 
 function validateSchedulerFormat()
 {
-    $schedulerErrors = $_FILES[SCHEDULER_FIELDNAME]["error"];
+    if(!isset($_FILES[SCHEDULE_FIELDNAME])){
+        Utils::showMessage(MessageUtils::NOT_SELECTED_SCHEDULER_ERROR_MESSAGE, false);
+    }
+    $schedulerErrors = $_FILES[SCHEDULE_FIELDNAME]["error"];
     if ($schedulerErrors == UPLOAD_ERR_NO_FILE) {
         Utils::showMessage(MessageUtils::NOT_SELECTED_SCHEDULER_ERROR_MESSAGE, false);
     }
 
-    $info = pathinfo($_FILES[SCHEDULER_FIELDNAME]['name']);
+    $info = pathinfo($_FILES[SCHEDULE_FIELDNAME]['name']);
     $extension = $info['extension'];
-    global $scheduler_formats;
-    if (!in_array($extension, $scheduler_formats)) {
+    global $schedule_formats;
+    if (!in_array($extension, $schedule_formats)) {
         Utils::showMessage(MessageUtils::INVALID_SCHEDULER_FORMAT_ERROR_MESSAGE, false);
     }
 }
 
 function constructScheduler()
 {
-    $json_data = file_get_contents($_FILES[SCHEDULER_FIELDNAME]['name']);
+    $json_data = file_get_contents($_FILES[SCHEDULE_FIELDNAME]['name']);
     $decodedJson = json_decode($json_data);
     for ($i = 0; $i < sizeof($decodedJson->user); $i++) {
         $errors = array();
@@ -87,7 +95,7 @@ function constructScheduler()
             }
         }
         if (!$areValidLecturerNames || !$areValidCourseFields) {
-            echo "The record is not saved";
+            echo "Invalid record in the shedule, it will be skipped!";
         }
     }
 }
@@ -97,8 +105,8 @@ function saveScheduler(Lecturer $lecture, Course $course)
     $firstNamelecture = $lecture->getFirstName();
     $lastNamelecture = $lecture->getLastName();
     $lectureId = DatabaseQueriesUtils::getLectureIdByNames($firstNamelecture, $lastNamelecture);
-    if ($lectureId == "") {
-        echo "The lecture $firstNamelecture $lastNamelecture is not registred in the system!";
+    if ($lectureId == null) {
+        echo "The lecturer $firstNamelecture $lastNamelecture is not registred in the system!";
         return;
     }
 
