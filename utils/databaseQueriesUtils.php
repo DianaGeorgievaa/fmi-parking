@@ -37,7 +37,7 @@ class DatabaseQueriesUtils
         $preparedSql->execute() or Utils::showMessage(MessageUtils::DATABASE_SAVE_INFORMATION_ERROR_MESSAGE, false);
     }
 
-    public static function saveScheduler(Course $course, $lectureId)
+    public static function saveSchedule(Course $course, $lectureId)
     {
         $connection = getDatabaseConnection();
         $table = TableNames::COURSES;

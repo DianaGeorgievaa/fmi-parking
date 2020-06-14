@@ -91,7 +91,7 @@ function constructScheduler()
             $areValidCourseFields = areValidCourseFields($courseTitle, $courseDay, $startTime, $endTime, $errors);
             if ($areValidLecturerNames && $areValidCourseFields) {
                 $course = new Course($courseTitle, $courseDay, $startTime, $endTime);
-                saveScheduler($lecture, $course);
+                saveSchedule($lecture, $course);
             }
         }
         if (!$areValidLecturerNames || !$areValidCourseFields) {
@@ -100,7 +100,7 @@ function constructScheduler()
     }
 }
 
-function saveScheduler(Lecturer $lecture, Course $course)
+function saveSchedule(Lecturer $lecture, Course $course)
 {
     $firstNamelecture = $lecture->getFirstName();
     $lastNamelecture = $lecture->getLastName();
@@ -110,7 +110,7 @@ function saveScheduler(Lecturer $lecture, Course $course)
         return;
     }
 
-    DatabaseQueriesUtils::saveScheduler($course, $lectureId);
+    DatabaseQueriesUtils::saveSchedule($course, $lectureId);
 }
 
 function areValidLecturerNames($firstName, $lastName, &$errors)
