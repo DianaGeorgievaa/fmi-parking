@@ -22,6 +22,7 @@ if (isLoggedInUser()) {
         $parkingDateIn = $userParkingInfo['parking_date_in'];
         updateUserPoints($userId, $parkingDateIn, $status);
         DatabaseQueriesUtils::deleteUserParkingInfo($userId);
+        // TODO $query = "UPDATE parking_spot SET is_free=true, user_in_spot='null', car_in_spot='null' WHERE user_in_spot='$userEmail'";
         header('Location:' . '../views/main.php'); // TODO redirect to parking spot
         return;
     }
