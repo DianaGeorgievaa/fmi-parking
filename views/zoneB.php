@@ -1,5 +1,9 @@
 <?php
-include '../views/main.php';
+include '../views/menu.php';
+
+if (!isLoggedInUser()) {
+    header('Location:' . '../views/index.php');
+}
 
 $user_email = (isset($_SESSION['email'])) ? $_SESSION['email'] : '';
 
@@ -9,6 +13,7 @@ $user_email = (isset($_SESSION['email'])) ? $_SESSION['email'] : '';
 
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="../styles/fmi-parking-style.css">
     <link rel="stylesheet" type="text/css" href="../styles/zoneB.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script>
     <script src="../js/take-spot.js"></script>

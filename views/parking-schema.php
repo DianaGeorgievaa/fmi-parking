@@ -1,7 +1,10 @@
 <?php
 
-include '../views/main.php';
+include '../views/menu.php';
 
+if (!isLoggedInUser()) {
+    header('Location:' . '../views/index.php');
+}
 ?>
 
 <!DOCTYPE html>
@@ -9,6 +12,7 @@ include '../views/main.php';
 
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="../styles/fmi-parking-style.css">
     <link rel="stylesheet" type="text/css" href="../styles/parking-schema.css">
     <script src="../js/parking.js"></script>
     <title>FMI Parking Schema</title>
@@ -34,9 +38,9 @@ include '../views/main.php';
     <img id="image" src="../assets/img/fmi_zones.jpg" usemap="#image-map">
 
     <map name="image-map">
-        <area target="" alt="zone A" title="zone A" href="./zoneA.html" coords="289,447,321,509,636,354,602,287" shape="poly">
-        <area target="" alt="zone B" title="zone B" href="./zoneB.html" coords="884,399,897,430,987,388,975,357" shape="poly">
-        <area target="" alt="zone C" title="zone C" href="./zoneC.html" coords="595,214,619,197,501,104,392,95,311,91,226,166,459,132,501,153,560,193,488,153,588,206,316,92,225,168,159,386,237,357,393,183,255,336,563,196,474,151,556,170" shape="poly">
+        <area target="" alt="zone A" title="zone A" href="./zoneA.php" coords="289,447,321,509,636,354,602,287" shape="poly">
+        <area target="" alt="zone B" title="zone B" href="./zoneB.php" coords="884,399,897,430,987,388,975,357" shape="poly">
+        <area target="" alt="zone C" title="zone C" href="./zoneC.php" coords="595,214,619,197,501,104,392,95,311,91,226,166,459,132,501,153,560,193,488,153,588,206,316,92,225,168,159,386,237,357,393,183,255,336,563,196,474,151,556,170" shape="poly">
     </map>
 </body>
 
