@@ -109,7 +109,8 @@ class DatabaseQueriesUtils
     }
 
 
-    public static function getAllUsers(){
+    public static function getAllUsers()
+    {
         $table = TableNames::USERS;
         $sql = "SELECT * FROM $table ;";
 
@@ -118,7 +119,7 @@ class DatabaseQueriesUtils
         $resultSet->execute() or Utils::showMessage(MessageUtils::DATABASE_GET_INFORMATION_ERROR_MESSAGE, false);
         $users = $resultSet->fetchAll(PDO::FETCH_ASSOC) or Utils::showMessage(MessageUtils::GET_USERS_ERROR_MESSAGE, false);
 
-        if(count($users) == 0){
+        if (count($users) == 0) {
             return null;
         }
 
@@ -223,16 +224,39 @@ class DatabaseQueriesUtils
                        VALUES (:parkingDateIn, :hasLectures, :userId);";
 
         $currentDate = date("Y-m-d H:i:s");
-        echo $currentDate;
         $connection = getDatabaseConnection();
         $resultSet = $connection->prepare($sql);
         $resultSet->bindParam(':parkingDateIn', $currentDate);
         $resultSet->bindParam(':hasLectures', $hasLecture);
         $resultSet->bindParam(':userId', $userId);
-        
+
         $resultSet->execute() or Utils::showMessage(MessageUtils::DATABASE_SAVE_INFORMATION_ERROR_MESSAGE, false);
     }
-    
+
+    public static function updateUserParkingSpot($email)
+    {
+        $table = TableNames::PARKING_SPOT;
+         //TODO add other fields
+        $sql = "UPDATE $table 
+                SET is_free = :isFree, user_in_spot = :userInSpot, car_in_spot = :carInSpot 
+                WHERE user_in_spot = :userEmail;";
+
+        $isFreeParkingSpot = 1;
+        $userInSpot = null;
+        $carInSpot =  null;
+
+        $connection = getDatabaseConnection();
+        $resultSet = $connection->prepare($sql);
+        $resultSet->bindParam(':isFree', $isFreeParkingSpot);
+        $resultSet->bindParam(':userInSpot', $userInSpot);
+        $resultSet->bindParam(':carInSpot', $carInSpot);
+        $resultSet->bindParam(':userEmail', $email);
+
+        $resultSet->execute() or Utils::showMessage(MessageUtils::DATABASE_UPDATE_INFORMATION_ERROR_MESSAGE, false);
+
+        // $query = "UPDATE parking_spot SET is_free=true, user_in_spot='null', car_in_spot='null' WHERE user_in_spot='$userEmail'";
+    }
+
     public static function saveUserWithLectureParkingInfo($userId, $hasLecture, $endTimeLecture)
     {
         $table = TableNames::USER_PARKING_INFO;
@@ -246,7 +270,7 @@ class DatabaseQueriesUtils
         $resultSet->bindParam(':endTimeLecture', $endTimeLecture);
         $resultSet->bindParam(':hasLectures', $hasLecture);
         $resultSet->bindParam(':userId', $userId);
-        
+
         $resultSet->execute() or Utils::showMessage(MessageUtils::DATABASE_SAVE_INFORMATION_ERROR_MESSAGE, false);
     }
 
@@ -329,11 +353,11 @@ class DatabaseQueriesUtils
         $resultSet = $connection->prepare($sql);
         $resultSet->bindParam(':userId', $userId);
         $resultSet->execute() or Utils::showMessage(MessageUtils::DATABASE_GET_INFORMATION_ERROR_MESSAGE, false);
-        
+
         if ($resultSet->rowCount() == 0) {
             return null;
         }
-        
+
         $viewers = $resultSet->fetchAll(PDO::FETCH_ASSOC) or Utils::showMessage(MessageUtils::GET_VIEWERS_ERROR_MESSAGE, false);
 
         return $viewers;
@@ -347,11 +371,11 @@ class DatabaseQueriesUtils
         $connection = getDatabaseConnection();
         $resultSet = $connection->prepare($sql);
         $resultSet->execute() or Utils::showMessage(MessageUtils::DATABASE_GET_INFORMATION_ERROR_MESSAGE, false);
-        
+
         if ($resultSet->rowCount() == 0) {
             return null;
         }
-        
+
         $numberOfFreeParkingSpots = $resultSet->fetch(PDO::FETCH_ASSOC) or Utils::showMessage(MessageUtils::GET_USER_PARKING_INFO_ERROR_MESSAGE, false);
 
         return $numberOfFreeParkingSpots;
@@ -427,18 +451,18 @@ class DatabaseQueriesUtils
         $sql = "SELECT * FROM $table WHERE has_lectures = :hasLectures;";
 
         $hasLecture = 0;
-        
+
         $connection = getDatabaseConnection();
         $resultSet = $connection->prepare($sql);
         $resultSet->bindParam(':hasLectures', $hasLecture);
         $resultSet->execute() or Utils::showMessage(MessageUtils::DATABASE_GET_INFORMATION_ERROR_MESSAGE, false);
-        
+
         if ($resultSet->rowCount() == 0) {
             return null;
         }
 
         $userId = $resultSet->fetch(PDO::FETCH_ASSOC) or Utils::showMessage(MessageUtils::GET_USER_PARKING_INFO_ERROR_MESSAGE, false);
-    
+
         return $userId;
     }
 }
