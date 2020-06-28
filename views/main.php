@@ -30,7 +30,7 @@
         }
     }
 
-    $userStatus = $_SESSION['status'];
+    $userStatus = isset($_SESSION['status']) ? $_SESSION['status'] : "";
     if (isLoggedInUser() && $userStatus != 'ADMIN') {
         $userQRCodePath = Utils::QR_CODE_FOLDER_PATH . $_SESSION['firstName'] . $_SESSION['lastName'] . '.png'; ?>
         <div id="reader"></div>

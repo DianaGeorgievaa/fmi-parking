@@ -28,6 +28,8 @@
             </div>
         </div>
         </div>
+    <?php } else {  ?>
+        <label><?php echo "You should be logged in!" ?></label>
     <?php } ?>
 </body>
 
