@@ -1,5 +1,5 @@
 <?php
-$configs = include __DIR__ . ('/../configuration/database_properties.php');
+$configs = include('../configuration/database_properties.php');
 
 function getDatabaseConnection()
 {
