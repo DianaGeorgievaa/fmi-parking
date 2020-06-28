@@ -26,10 +26,15 @@
             <span class="required">* </span>
             <br>
 
+            <input class="regInput" type="text" disabled="true" id="typeSpot">
+            <span class="required">* </span>
+            <br>
+
             <input class="regInput" type="text" name="carNumber" placeholder="Car number">
             <span class="error" id="carErr">The car number must be valid.</span>
             <span class="required">* </span>
             <br>
+
             <input type="hidden" id="data" />
 
             <input id="submitBtn" type="button" value="Take spot" onClick=reserve(); />

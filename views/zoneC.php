@@ -86,7 +86,7 @@ $user_email = (isset($_SESSION['email'])) ? $_SESSION['email'] : '';
     </div>
     </div>
     <div id="embedForm">
-        <embed type="text/html" src="send-req-form.html" width="500" height="300">
+        <embed type="text/html" src="send-req-form.html" width="500" height="350">
     </div>
 
 </body>
@@ -110,6 +110,8 @@ $user_email = (isset($_SESSION['email'])) ? $_SESSION['email'] : '';
         var user_email = '<?php echo $user_email; ?>';
         console.log(user_email);
         sessionStorage.setItem("user_email", user_email);
+
+        sessionStorage.setItem("typeSpot", "shady");
 
         document.getElementById("embedForm").style.display = "block";
         d3.select("#" + spot).attr("fill", "red");

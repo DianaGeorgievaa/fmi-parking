@@ -102,4 +102,8 @@ function setUp() {
   document.getElementById("spot").value = sessionStorage.getItem("spot");
 
   document.getElementById("email").value = sessionStorage.getItem("user_email");
+
+  document.getElementById("typeSpot").value = sessionStorage.getItem(
+    "typeSpot"
+  );
 }
