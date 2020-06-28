@@ -3,36 +3,36 @@
 
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" type="text/css" href="./css/send-req-form.css">
-	<script src="./reservation-request.js"></script>
+    <link href="../styles/send-req-form.css" rel="stylesheet" type="text/css">
+    <script src="../js/take-spot.js"></script>
 </head>
 
-<body>
+<body onload="setUp();">
     <form id="regForm">
-        <div id="formTitle"><b>Резервация</b></div>
+        <div id="formTitle"><b>Fill in your car number please:</b></div>
         <div id="inputFields">
 
-            <span class="error" id="emptyFieldsError">Моля, попълнете всички полета!</span>
-            <span class="success" id="successReservation">Успешна резервация!</span>
-            <span class="error" id="alreadyExistingUserError">Вече съществува такава резервация!</span>
+            <span class="error" id="emptyFieldsError">Please fill in all fields!</span>
+            <span class="success" id="successReservation">Success!</span>
+            <span class="error" id="alreadyExistingUserError">There is already such car in parking!</span>
 
-            <input class="regInput" type="text" name="username" placeholder="Username">
-            <span class="error" id="usernameErr">Потребителското име трябва да бъде валидно.</span>
+            <input class="regInput" type="email" name="email" disabled="true" id="email" placeholder="User">
+            <span class="error" id="emailErr">User should be valid.</span>
             <span class="required">* </span>
             <br>
 
-            <input class="regInput" type="datetime" name="date" placeholder="Date and time">
-            <span class="error" id="dateErr">Датата и часа трябва да бъдат валидни.</span>
+            <input class="regInput" type="text" name="spot" disabled="true" id="spot" placeholder="Chosen spot">
+            <span class="error" id="spotErr">The spot must be valid.</span>
             <span class="required">* </span>
             <br>
 
             <input class="regInput" type="text" name="carNumber" placeholder="Car number">
-            <span class="error" id="carErr">Номерът на колата трябва да е валиден.</span>
+            <span class="error" id="carErr">The car number must be valid.</span>
             <span class="required">* </span>
             <br>
             <input type="hidden" id="data" />
 
-            <input id="submitBtn" type="button" value="Reserve" onClick=reserve(); />
+            <input id="submitBtn" type="button" value="Take spot" onClick=reserve(); />
         </div>
     </form>
 </body>

@@ -1,23 +1,20 @@
 <?php
+include __DIR__ . '/../configuration/db_config.php';
+include 'parkingSpot.php';
+
 
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
 
-include_once 'database.php';
-include_once 'parkingSpot.php';
-
 class Parking
 {
-
-    private $database;
     private $db;
 
     private $countAvailableSpots;
 
     public function __construct()
     {
-        $database = new Database();
-        $db = $database->getConnection();
+        $this->db = getDatabaseConnection();
     }
 
     public function retrieveParkingSpots()
@@ -30,8 +27,7 @@ class Parking
         $parkingSpots_arr = array();
         $current_arr = array();
         $index = 0;
-        while ($row = $result->fetch(PDO::FETCH_ASSOC))
-        {
+        while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
             extract($row);
 
             $current_arr = array(
@@ -46,13 +42,11 @@ class Parking
             $parkingSpots_arr[$index] = $current_arr;
 
             $index++;
-
         }
 
         http_response_code(200);
 
         echo json_encode($parkingSpots_arr);
-
     }
 
     function retrieveAvailableSpots()
@@ -65,12 +59,10 @@ class Parking
         $parkingSpots_arr = array();
         $current_arr = array();
         $index = 0;
-        while ($row = $result->fetch(PDO::FETCH_ASSOC))
-        {
+        while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
             extract($row);
 
-            if ($row["is_free"] == 1)
-            {
+            if ($row["is_free"] == 1) {
 
                 $current_arr = array(
                     "number" => $number,
@@ -84,9 +76,7 @@ class Parking
                 $parkingSpots_arr[$index] = $current_arr;
 
                 $index++;
-
             }
-
         }
 
         $this->countAvailableSpots = $index;
@@ -107,12 +97,10 @@ class Parking
         $parkingSpots_arr = array();
         $current_arr = array();
         $index = 0;
-        while ($row = $result->fetch(PDO::FETCH_ASSOC))
-        {
+        while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
             extract($row);
 
-            if ($row["is_free"] == 1 and $row["zone"] == $wantedZone)
-            {
+            if ($row["is_free"] == 1 and $row["zone"] == $wantedZone) {
 
                 $current_arr = array(
                     "number" => $number,
@@ -126,15 +114,12 @@ class Parking
                 $parkingSpots_arr[$index] = $current_arr;
 
                 $index++;
-
             }
-
         }
 
         http_response_code(200);
 
         echo json_encode($parkingSpots_arr);
-
     }
 
     function isSpotAvailable($wantedNumber, $wantedZone)
@@ -142,16 +127,13 @@ class Parking
         $parkingSpot = new ParkingSpot($this->db);
         $result = $parkingSpot->getSpots();
 
-        while ($row = $result->fetch(PDO::FETCH_ASSOC))
-        {
+        while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
             extract($row);
 
-            if ($row["is_free"] == 1 and $row["zone"] == $wantedZone and $row["number"] = $wantedNumber)
-            {
+            if ($row["is_free"] == 1 and $row["zone"] == $wantedZone and $row["number"] = $wantedNumber) {
 
                 return true;
             }
-
         }
 
         return false;
@@ -165,8 +147,7 @@ class Parking
         $userInSpot = $_POST['userInSpot'];
         $carInSpot = $_POST['carInSpot'];
 
-        if ($this->isSpotAvailable($number, $zone))
-        {
+        if ($this->isSpotAvailable($number, $zone)) {
 
             $parkingSpot = new ParkingSpot($this->db);
             $parkingSpot->number = $number;
@@ -178,8 +159,5 @@ class Parking
 
             $this->countAvailableSpots--;
         }
-
     }
 }
-
-?>

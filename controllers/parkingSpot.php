@@ -1,7 +1,5 @@
 <?php
 
-include_once 'database.php';
-
 class ParkingSpot
 {
     private $conn;
@@ -17,26 +15,20 @@ class ParkingSpot
 
     public function __construct($dbConnection)
     {
-        $database = new Database();
-        $this->conn = $database->getConnection();
+        $this->conn = $dbConnection;
     }
 
     // retrieve all parking spots
     function getSpots()
     {
-
-        try
-        {
+        try {
             $query = "SELECT * " . "FROM	" . $this->table_name;
             $stmt = $this
                 ->conn
                 ->prepare($query);
 
             $stmt->execute();
-
-        }
-        catch(Exception $e)
-        {
+        } catch (Exception $e) {
             echo $e->getMessage();
         }
 
@@ -60,12 +52,9 @@ class ParkingSpot
         // $this->number = htmlspecialchars(strip_tags($this->number));
         // $this->zone = htmlspecialchars(strip_tags($this->zone));
 
-        if ($stmt->execute())
-        {
+        if ($stmt->execute()) {
             return true;
         }
         return false;
     }
 }
-
-?>

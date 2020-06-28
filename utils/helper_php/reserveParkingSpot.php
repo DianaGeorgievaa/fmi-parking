@@ -1,6 +1,4 @@
-<?php 
-include_once('../parking.php');
+<?php
+include __DIR__ . ('/../../controllers/parking.php');
 $parking = new Parking();
 $parking->reserveParkingSpot();
-
-?>

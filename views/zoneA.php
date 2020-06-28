@@ -1,22 +1,24 @@
+<?php
+include '../views/main.php';
+
+$user_email = (isset($_SESSION['email'])) ? $_SESSION['email'] : '';
+
+?>
+
 <!DOCTYPE html>
 <html>
 
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" type="text/css" href="./css/zoneA.css">
+    <link rel="stylesheet" type="text/css" href="../styles/zoneA.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script>
-    <script src="./reservation-request.js"></script>
-	<script src="./parking.js"></script>
-    <title>Зона A</title>
+    <script src="../js/take-spot.js"></script>
+    <script src="../js/parking.js"></script>
+    <title>Zone A</title>
 </head>
 
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script>
-<script src="./reservation-request.js"></script>
-
 <body id="body" onload="setAvailableZones();">
-    <dib class="left">
-
+    <div class="left">
         <div class="aLeft">
             <div class="spot">
                 <svg width="75" height="50">
@@ -110,10 +112,10 @@
             <span id="availableSpotsZoneA"></span>
         </div>
 
-        </div>
-        <div id="embedForm">
-            <embed type="text/html" src="send-req-form.html" width="500" height="300">
-        </div>
+    </div>
+    <div id="embedForm">
+        <embed type="text/html" src="send-req-form.html" width="500" height="300">
+    </div>
 
 
 </body>
@@ -131,19 +133,37 @@
         .append("rect")
         .attr("x", 10)
         .attr("y", 10);
+
     function reserveSpot(spot) {
         console.log(spot);
-		sessionStorage.setItem("spot", spot);
+        sessionStorage.setItem("spot", spot);
+
+        var user_email = '<?php echo $user_email; ?>';
+        console.log(user_email);
+        sessionStorage.setItem("user_email", user_email);
+
         document.getElementById("embedForm").style.display = "block";
         d3.select("#" + spot).attr("fill", "red");
-    }
-	function setAvailableZones() {
-	  document.getElementById("availableSpotsZoneA")!=null ? document.getElementById("availableSpotsZoneA").innerHTML = getParkingSpotsPerZone("A") : "";
-	  document.getElementById("availableSpotsZoneB")!=null ? document.getElementById("availableSpotsZoneB").innerHTML = getParkingSpotsPerZone("B"): "";
-	  document.getElementById("availableSpotsZoneC")!=null ? document.getElementById("availableSpotsZoneC").innerHTML = getParkingSpotsPerZone("C"):"";
 
-		var rects =  d3.selectAll("svg").selectAll("rect")
-					  .style("fill", function(d){ if(this.id=="build") {return "yellow";} else if(isSpotAvailable(this.id)) {return "green"; } else {return "red";}  } )
-					  ;
-	}
+        document.getElementById("spot").value = sessionStorage.getItem("spot");
+
+        document.getElementById("email").value = sessionStorage.getItem("user_email");
+    }
+
+    function setAvailableZones() {
+        document.getElementById("availableSpotsZoneA") != null ? document.getElementById("availableSpotsZoneA").innerHTML = getParkingSpotsPerZone("A") : "";
+        document.getElementById("availableSpotsZoneB") != null ? document.getElementById("availableSpotsZoneB").innerHTML = getParkingSpotsPerZone("B") : "";
+        document.getElementById("availableSpotsZoneC") != null ? document.getElementById("availableSpotsZoneC").innerHTML = getParkingSpotsPerZone("C") : "";
+
+        var rects = d3.selectAll("svg").selectAll("rect")
+            .style("fill", function(d) {
+                if (this.id == "build") {
+                    return "yellow";
+                } else if (isSpotAvailable(this.id)) {
+                    return "green";
+                } else {
+                    return "red";
+                }
+            });
+    }
 </script>

@@ -15,7 +15,7 @@ function getParkingSpots() {
   var client = new HttpClient();
   var parkingSpots;
 
-  client.get("http://localhost/helper_php/getParkingSpots.php", function (
+  client.get("http://localhost/utils/helper_php/getParkingSpots.php", function (
     response
   ) {
     parkingSpots = JSON.parse(response);
@@ -29,40 +29,40 @@ function getAvailableParkingSpots() {
   var parkingSpots;
 
   client.get(
-    "http://localhost/project/helper_php/getAvailableParkingSpots.php",
+    "http://localhost/fmi-parking/utils/helper_php/getAvailableParkingSpots.php",
     function (response) {
       parkingSpots = JSON.parse(response);
       console.log(response);
       console.log(parkingSpots);
     }
   );
-  
+
   return parkingSpots.length;
 }
 
-function isSpotAvailable(spot){
-	var client = new HttpClient();
-	  var parkingSpots;
-	  
-	  var resp = false;
+function isSpotAvailable(spot) {
+  var client = new HttpClient();
+  var parkingSpots;
 
-	if(spot=="build"){
-		return true;
-	}
+  var resp = false;
 
-	  client.get(
-		"http://localhost/project/helper_php/getAvailableParkingSpots.php",
-		function (response) {
-		  parkingSpots = JSON.parse(response);
-		  for(parkingSpot of parkingSpots){
-			if((parkingSpot.zone + parkingSpot.number) == spot ){
-				resp = true;
-			}
-		  }
-		}
-	  );
-	
-	  return resp;
+  if (spot == "build") {
+    return true;
+  }
+
+  client.get(
+    "http://localhost/fmi-parking/utils/helper_php/getAvailableParkingSpots.php",
+    function (response) {
+      parkingSpots = JSON.parse(response);
+      for (parkingSpot of parkingSpots) {
+        if (parkingSpot.zone + parkingSpot.number == spot) {
+          resp = true;
+        }
+      }
+    }
+  );
+
+  return resp;
 }
 
 function getParkingSpotsPerZone(zone) {
@@ -70,35 +70,38 @@ function getParkingSpotsPerZone(zone) {
   var parkingSpots;
 
   client.get(
-    "http://localhost/project/helper_php/getParkingSpotsPerZone.php?zone=" + zone,
+    "http://localhost/fmi-parking/utils/helper_php/getParkingSpotsPerZone.php?zone=" +
+      zone,
     function (response) {
       parkingSpots = JSON.parse(response);
       console.log(response);
       console.log(parkingSpots);
     }
   );
-  
-   return parkingSpots.length;
-}
 
-function reserveParkingSpot() {
-  var xhr = new XMLHttpRequest();
-  xhr.open("POST", "http://localhost/project/helper_php/reserveParkingSpot.php", true);
-  xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-  xhr.onload = function () {
-    // do something to response
-    console.log(this.responseText);
-  };
-
-  xhr.send("number=1&zone=A&userInSpot=rosi&carInSpot=pesho");
+  return parkingSpots.length;
 }
 
 function setAvailable() {
-  document.getElementById("availableSpots").innerHTML = getAvailableParkingSpots();
+  document.getElementById(
+    "availableSpots"
+  ).innerHTML = getAvailableParkingSpots();
 }
 
 function setAvailableZones() {
-  document.getElementById("availableSpotsZoneA")!=null ? document.getElementById("availableSpotsZoneA").innerHTML = getParkingSpotsPerZone("A") : "";
-  document.getElementById("availableSpotsZoneB")!=null ? document.getElementById("availableSpotsZoneB").innerHTML = getParkingSpotsPerZone("B"): "";
-  document.getElementById("availableSpotsZoneC")!=null ? document.getElementById("availableSpotsZoneC").innerHTML = getParkingSpotsPerZone("C"):"";
+  document.getElementById("availableSpotsZoneA") != null
+    ? (document.getElementById(
+        "availableSpotsZoneA"
+      ).innerHTML = getParkingSpotsPerZone("A"))
+    : "";
+  document.getElementById("availableSpotsZoneB") != null
+    ? (document.getElementById(
+        "availableSpotsZoneB"
+      ).innerHTML = getParkingSpotsPerZone("B"))
+    : "";
+  document.getElementById("availableSpotsZoneC") != null
+    ? (document.getElementById(
+        "availableSpotsZoneC"
+      ).innerHTML = getParkingSpotsPerZone("C"))
+    : "";
 }
