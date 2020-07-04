@@ -22,8 +22,8 @@ if (isLoggedInUser()) {
         $parkingDateIn = $userParkingInfo['parking_date_in'];
         updateUserPoints($userId, $parkingDateIn, $status);
         DatabaseQueriesUtils::deleteUserParkingInfo($userId);
-        // TODO $query = "UPDATE parking_spot SET is_free=true, user_in_spot='null', car_in_spot='null' WHERE user_in_spot='$userEmail'";
-        header('Location:' . '../views/main.php'); // TODO redirect to parking spot
+        DatabaseQueriesUtils::updateUserParkingSpot($userEmail);
+        header('Location:' . '../views/main.php');
         return;
     }
 
@@ -44,7 +44,7 @@ if (isLoggedInUser()) {
             return;
         }
         DatabaseQueriesUtils::saveUserWithLectureParkingInfo($userId, 1, null);
-        header('Location:' . '../views/main.php'); // TODO redirect to parking spot
+        header('Location:' . '../views/parking-schema.php');
     } else if ($status == 'TEMPORARY') {
         if ($numberOfFreeParkingSpots == null || $numberOfFreeParkingSpots == 0) {
             // TODO show after how minutes the parking will be free
@@ -60,7 +60,7 @@ if (isLoggedInUser()) {
             DatabaseQueriesUtils::saveUserWithLectureParkingInfo($userId, 1, $endTimeLecture);
             $body = EmailMessages::EMAIL_PARKING_LEAVING_BODY . $lecture['end_time'];
             EmailNotification::sendEmailNotification($userEmail, EmailMessages::EMAIL_PARKING_LEAVING_SUBJECT, $body);
-            header('Location:' . '../views/main.php'); // TODO redirect to parking spot
+            header('Location:' . '../views/parking-schema.php');
         } else if ($numberOfFreeParkingSpots > Utils::REQUIRED_PARKING_SPOTS) {
             DatabaseQueriesUtils::saveUserWithoutLectureParkingInfo($userId, 0, null);
             Utils::showMessage(MessageUtils::PARKING_ENTRANCE_WARNING_MESSAGE, false);

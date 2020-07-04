@@ -1,7 +1,10 @@
 <?php
 
-include '../views/main.php';
+include '../views/menu.php';
 
+if (!isLoggedInUser()) {
+    header('Location:' . '../views/index.php');
+}
 ?>
 
 <!DOCTYPE html>
@@ -9,6 +12,7 @@ include '../views/main.php';
 
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="../styles/fmi-parking-style.css">
     <link rel="stylesheet" type="text/css" href="../styles/parking-schema.css">
     <script src="../js/parking.js"></script>
     <title>FMI Parking Schema</title>
