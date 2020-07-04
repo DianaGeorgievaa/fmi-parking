@@ -15,9 +15,7 @@ function getParkingSpots() {
   var client = new HttpClient();
   var parkingSpots;
 
-  client.get("http://localhost/utils/helper_php/getParkingSpots.php", function (
-    response
-  ) {
+  client.get("../utils/helper_php/getParkingSpots.php", function (response) {
     parkingSpots = JSON.parse(response);
     console.log(response);
     console.log(parkingSpots);
@@ -28,14 +26,13 @@ function getAvailableParkingSpots() {
   var client = new HttpClient();
   var parkingSpots;
 
-  client.get(
-    "http://localhost/fmi-parking/utils/helper_php/getAvailableParkingSpots.php",
-    function (response) {
-      parkingSpots = JSON.parse(response);
-      console.log(response);
-      console.log(parkingSpots);
-    }
-  );
+  client.get("../utils/helper_php/getAvailableParkingSpots.php", function (
+    response
+  ) {
+    parkingSpots = JSON.parse(response);
+    console.log(response);
+    console.log(parkingSpots);
+  });
 
   return parkingSpots.length;
 }
@@ -50,17 +47,18 @@ function isSpotAvailable(spot) {
     return true;
   }
 
-  client.get(
-    "http://localhost/fmi-parking/utils/helper_php/getAvailableParkingSpots.php",
-    function (response) {
-      parkingSpots = JSON.parse(response);
-      for (parkingSpot of parkingSpots) {
-        if (parkingSpot.zone + parkingSpot.number == spot) {
-          resp = true;
-        }
+  console.log(window.location.href);
+
+  client.get("../utils/helper_php/getAvailableParkingSpots.php", function (
+    response
+  ) {
+    parkingSpots = JSON.parse(response);
+    for (parkingSpot of parkingSpots) {
+      if (parkingSpot.zone + parkingSpot.number == spot) {
+        resp = true;
       }
     }
-  );
+  });
 
   return resp;
 }
@@ -70,8 +68,7 @@ function getParkingSpotsPerZone(zone) {
   var parkingSpots;
 
   client.get(
-    "http://localhost/fmi-parking/utils/helper_php/getParkingSpotsPerZone.php?zone=" +
-      zone,
+    "../utils/helper_php/getParkingSpotsPerZone.php?zone=" + zone,
     function (response) {
       parkingSpots = JSON.parse(response);
       console.log(response);
