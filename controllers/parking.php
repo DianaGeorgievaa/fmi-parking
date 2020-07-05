@@ -1,5 +1,5 @@
 <?php
-include __DIR__ . '/../configuration/db_config.php';
+include __DIR__ . '/../configuration/db_config_parking.php';
 include 'parkingSpot.php';
 
 

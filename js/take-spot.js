@@ -69,11 +69,7 @@ function sendReservation() {
   console.log(spot + " " + zone + " " + user + " " + car);
 
   var xhr = new XMLHttpRequest();
-  xhr.open(
-    "POST",
-    "http://localhost/fmi-parking/utils/helper_php/reserveParkingSpot.php",
-    true
-  );
+  xhr.open("POST", "../utils/helper_php/reserveParkingSpot.php", true);
   xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
   xhr.onload = function () {
     // do something to response
