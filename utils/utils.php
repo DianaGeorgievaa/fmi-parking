@@ -26,4 +26,9 @@ class Utils
     {
         header("Location:" . '../views/message-handler.php' . '?message=' . $message . '&isSuccess=' . $isSuccess);
     }
+
+    public static function showWarningMessage($message, $isWarning)
+    {
+        header("Location:" . '../views/message-handler.php' . '?message=' . $message . '&isWarning=' . $isWarning);
+    }
 }

@@ -236,7 +236,6 @@ class DatabaseQueriesUtils
     public static function updateUserParkingSpot($email)
     {
         $table = TableNames::PARKING_SPOT;
-         //TODO add other fields
         $sql = "UPDATE $table 
                 SET is_free = :isFree, user_in_spot = :userInSpot, car_in_spot = :carInSpot 
                 WHERE user_in_spot = :userEmail;";
@@ -253,8 +252,6 @@ class DatabaseQueriesUtils
         $resultSet->bindParam(':userEmail', $email);
 
         $resultSet->execute() or Utils::showMessage(MessageUtils::DATABASE_UPDATE_INFORMATION_ERROR_MESSAGE, false);
-
-        // $query = "UPDATE parking_spot SET is_free=true, user_in_spot='null', car_in_spot='null' WHERE user_in_spot='$userEmail'";
     }
 
     public static function saveUserWithLectureParkingInfo($userId, $hasLecture, $endTimeLecture)

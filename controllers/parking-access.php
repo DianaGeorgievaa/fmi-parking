@@ -63,7 +63,7 @@ if (isLoggedInUser()) {
             header('Location:' . '../views/parking-schema.php');
         } else if ($numberOfFreeParkingSpots > Utils::REQUIRED_PARKING_SPOTS) {
             DatabaseQueriesUtils::saveUserWithoutLectureParkingInfo($userId, 0, null);
-            Utils::showMessage(MessageUtils::PARKING_ENTRANCE_WARNING_MESSAGE, false);
+            Utils::showWarningMessage(MessageUtils::PARKING_ENTRANCE_WARNING_MESSAGE, true);
         } else {
             Utils::showMessage(MessageUtils::NOT_ENOUGHT_PAKING_SPOTS_MESSAGE, false);
         }
