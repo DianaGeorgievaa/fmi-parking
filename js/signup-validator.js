@@ -105,3 +105,14 @@ function isCarNumberValid() {
     document.getElementById(INVALID_CAR_NUMBER_ID).innerHTML = "";
     return true;
 }
+
+function checkIfIsAdminStatus() {
+    let status = document.getElementById("status");
+    let statusValue = status.options[status.selectedIndex].value;
+    let carNumberField = document.getElementById("carnumber");
+    if (statusValue === "admin") {
+        carNumberField.classList.add('hide-car-number');
+    } else {
+        carNumberField.classList.remove('hide-car-number');
+    }
+}

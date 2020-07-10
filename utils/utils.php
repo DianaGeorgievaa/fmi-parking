@@ -25,7 +25,7 @@ class Utils
     public static function showMessage($message, $isSuccess)
     {
         header("Location:" . '../views/message-handler.php' . '?message=' . $message . '&isSuccess=' . $isSuccess);
-        //die();
+        die();
     }
 
     public static function showWarningMessage($message, $isWarning)
