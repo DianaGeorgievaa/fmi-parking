@@ -27,8 +27,12 @@ if (!isset($_SESSION)) {
 if ($_POST) {
     if (isLoggedInAdmin()) {
         if (isset($_POST['delete-schedule'])) {
-            DatabaseQueriesUtils::deleteSchedule();
-            Utils::showMessage(MessageUtils::SUCCESSFUL_DELETED_SCHEDULER_MESSAGE, true);
+            if(DatabaseQueriesUtils::hasUploadedSchedule()){
+                Utils::showMessage(MessageUtils::NO_UPLOADED_SCHEDULE_MESSAGE, false);
+            } else {
+                DatabaseQueriesUtils::deleteSchedule();
+                Utils::showMessage(MessageUtils::SUCCESSFUL_DELETED_SCHEDULER_MESSAGE, true);
+            }
         } elseif (isset($_POST['upload-schedule'])) {
             validateSchedulerFormat();
             $scheduler = $_FILES[SCHEDULE_FIELDNAME];

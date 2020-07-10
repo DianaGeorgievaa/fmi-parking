@@ -30,3 +30,7 @@ input[type="file"] {
 #registration-button:hover {
     background: #2CC06B;
 }
+
+.hide-car-number {
+    display: none;
+}

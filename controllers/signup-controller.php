@@ -29,7 +29,7 @@
         $firstname = $_POST[FIRST_NAME_FIELD];
         $lastname = $_POST[LAST_NAME_FIELD];
         $password = $_POST[PASSWORD_FIELD];
-        $carNumber = $_POST[CAR_NUMBER_FIELD];
+        $carNumber = null;
         $status = strtoupper($_POST[STATUS_FIELD]);
         $points = 0;
         $photo = getUploadedPhoto();
@@ -38,6 +38,8 @@
         $qrCodeNameValue = null;
         if ($status != 'ADMIN') {
             $qrCodeNameValue = $firstname . $lastname . '.png';
+            $carNumber = $_POST[CAR_NUMBER_FIELD];
+            validateFormField(CAR_NUMBER_FIELD,'/^[A-Z]{1,2}[0-9]{4}[A-Z]{1,2}/', $errors);
         }
 
         if (!DatabaseQueriesUtils::isExistingEmail($email)) {
@@ -63,7 +65,6 @@
         validateFormField(LAST_NAME_FIELD, '/^[A-Z][a-z-]{3,25}/', $errors);
         validateFormField(EMAIL_FIELD, '/[^@]+@[^\.]+\..+/', $errors);
         validateFormField(PASSWORD_FIELD, '/^.{10,}/', $errors);
-        validateFormField(CAR_NUMBER_FIELD,'/^[A-Z]{1,2}[0-9]{4}[A-Z]{1,2}/', $errors);
         validatePasswords($errors);
         validateStatus($errors);
 

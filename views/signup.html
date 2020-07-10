@@ -23,17 +23,17 @@
             <input type="password" id="password" class="input-style" name="password" onfocusout=" isPasswordValid()" placeholder="Password" required />
             <p id="confirmedPasswordError"></p>
             <input type="password" id="confirmedpassword" class="input-style" name="confirmedpassword" onfocusout="isConfirmPasswordValid()" placeholder="Confirm password" required />
-            <p id="carNumberError"></p>
-            <input type="text" id="carnumber" class="input-style" name="carnumber" onfocusout="isCarNumberValid()" placeholder="Car number" required />
             <div class="additional-fields">
                 <label for="status" id="status-field">Status:</label>
-                <select name="status" id="status" readonly>
-                    <option value="admin">ADMIN</option>
+                <select name="status" id="status" onmouseout="checkIfIsAdminStatus()" readonly>
                     <option value="permanent">PERMANENT</option>
+                    <option value="admin">ADMIN</option>
                     <option value="temporary">TEMPORARY</option>
                     <option value="blocked">BLOCKED</option>
                 </select>
             </div>
+            <p id="carNumberError"></p>
+            <input type="text" id="carnumber" class="input-style" name="carnumber" onfocusout="isCarNumberValid()" placeholder="Car number" required />
             <div class="additional-fields">
                 <label for="img">Photo:</label>
                 <input type="file" id="photo" name="photo" accept="image/*" placeholder="Photo" required />

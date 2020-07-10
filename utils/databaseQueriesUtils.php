@@ -62,9 +62,15 @@ class DatabaseQueriesUtils
         DatabaseQueriesUtils::insertCourseAndLecture($lectureId, $courseId);
     }
 
-    public static function Schedule()
+    public static function hasUploadedSchedule()
     {
-//TODO
+        $connection = getDatabaseConnection();
+        $table = TableNames::COURSES;
+        $getCoursesQuery = "SELECT * FROM $table;";
+        $preparedSql = $connection->prepare($getCoursesQuery);
+        $preparedSql->execute() or Utils::showMessage(MessageUtils::DATABASE_GET_INFORMATION_ERROR_MESSAGE, false);
+        
+        return $preparedSql->rowCount() == 0;
     }
 
     public static function deleteSchedule()
@@ -114,9 +120,7 @@ class DatabaseQueriesUtils
         $preparedSql->bindParam(':email', $email);
         $preparedSql->execute() or Utils::showMessage(MessageUtils::DATABASE_GET_INFORMATION_ERROR_MESSAGE, false);
 
-        $result = $preparedSql->fetchAll() or Utils::showMessage(MessageUtils::GET_USER_ERROR_MESSAGE, false);
-
-        return count($result) != 0;
+        return $preparedSql->rowCount() != 0;
     }
 
 
