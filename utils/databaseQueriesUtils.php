@@ -12,8 +12,8 @@ class DatabaseQueriesUtils
     public static function saveUser(User $user)
     {
         $table = TableNames::USERS;
-        $sql = "INSERT INTO $table (first_name, last_name, email, password, status, photo_name, points, qr_code) 
-                        VALUES (:firstname, :lastname, :email, :password, :status, :photoName, :points, :qrCode);";
+        $sql = "INSERT INTO $table (first_name, last_name, email, password, status, photo_name, points, qr_code, car_number) 
+                        VALUES (:firstname, :lastname, :email, :password, :status, :photoName, :points, :qrCode, :carNumber);";
 
         $userFirstname = $user->getFirstName();
         $userLastname = $user->getLastName();
@@ -23,7 +23,8 @@ class DatabaseQueriesUtils
         $userPhotoName = $user->getPhotoName();
         $userPoints = $user->getPoints();
         $userQrCode = $user->getQrCode();
-
+        $userCarNumber = $user->getCarNumber();
+        
         $connection = getDatabaseConnection();
         $preparedSql = $connection->prepare($sql);
         $preparedSql->bindParam(':firstname', $userFirstname);
@@ -34,6 +35,7 @@ class DatabaseQueriesUtils
         $preparedSql->bindParam(':photoName', $userPhotoName);
         $preparedSql->bindParam(':points', $userPoints);
         $preparedSql->bindParam(':qrCode', $userQrCode);
+        $preparedSql->bindParam(':carNumber', $userCarNumber);
         $preparedSql->execute() or Utils::showMessage(MessageUtils::DATABASE_SAVE_INFORMATION_ERROR_MESSAGE, false);
     }
 
@@ -60,6 +62,35 @@ class DatabaseQueriesUtils
         DatabaseQueriesUtils::insertCourseAndLecture($lectureId, $courseId);
     }
 
+    public static function Schedule()
+    {
+//TODO
+    }
+
+    public static function deleteSchedule()
+    {
+        self::deleteUserCourses();
+        self::deleteCourses();
+    }
+
+    public static function deleteCourses()
+    {
+        $connection = getDatabaseConnection();
+        $table = TableNames::COURSES;
+        $deleteCoursesQuery = "DELETE FROM $table;";
+        $preparedSql = $connection->prepare($deleteCoursesQuery);
+        $preparedSql->execute() or Utils::showMessage(MessageUtils::DATABASE_DELETE_INFORMATION_ERROR_MESSAGE, false);
+    }
+
+    public static function deleteUserCourses()
+    {
+        $connection = getDatabaseConnection();
+        $table = TableNames::USERS_COURSES;
+        $deleteCoursesQuery = "DELETE FROM $table;";
+        $preparedSql = $connection->prepare($deleteCoursesQuery);
+        $preparedSql->execute() or Utils::showMessage(MessageUtils::DATABASE_DELETE_INFORMATION_ERROR_MESSAGE, false);
+    }
+
     public static function insertCourseAndLecture($lectureId, $courseId)
     {
         $connection = getDatabaseConnection();
@@ -83,7 +114,7 @@ class DatabaseQueriesUtils
         $preparedSql->bindParam(':email', $email);
         $preparedSql->execute() or Utils::showMessage(MessageUtils::DATABASE_GET_INFORMATION_ERROR_MESSAGE, false);
 
-        $result = $preparedSql->fetchAll() or Utils::showMessage(MessageUtils::GET_USER_ERROR_MESSAGE, false);;
+        $result = $preparedSql->fetchAll() or Utils::showMessage(MessageUtils::GET_USER_ERROR_MESSAGE, false);
 
         return count($result) != 0;
     }
@@ -154,17 +185,16 @@ class DatabaseQueriesUtils
         return $user;
     }
 
-    public static function getLectureIdByNames($firstNamelecture, $lastNamelecture)
+    public static function getLectureIdByEmail($lectureEmail)
     {
         $connection = getDatabaseConnection();
         $table = TableNames::USERS;
 
-        $selectUserQuery = "SELECT user_id, first_name, last_name FROM $table
-                        WHERE first_name=:firstName AND last_name=:lastName;";
+        $selectUserQuery = "SELECT user_id FROM $table
+                        WHERE email=:email;";
 
         $preparedSql = $connection->prepare($selectUserQuery);
-        $preparedSql->bindParam(':firstName', $firstNamelecture);
-        $preparedSql->bindParam(':lastName', $lastNamelecture);
+        $preparedSql->bindParam(':email', $lectureEmail);
         $preparedSql->execute() or Utils::showMessage(MessageUtils::DATABASE_GET_INFORMATION_ERROR_MESSAGE, false);
 
         if ($preparedSql->rowCount() == 0) {

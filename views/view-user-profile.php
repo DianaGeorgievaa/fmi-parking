@@ -32,11 +32,6 @@ include '../views/menu.php';
         DatabaseQueriesUtils::saveViewer($viewedUserId);
 
         $userParkingInfo = DatabaseQueriesUtils::getUserParkingInfo($viewedUserId);
-        // $parkingSpot = null;
-        // if ($userParkingInfo != null) {
-        //     $parkingSpotId = $userParkingInfo['parking_spot_id'];
-        //     $parkingSpot = DatabaseQueriesUtils::getParkingSpotById($parkingSpotId);
-        // }
     ?>
         <div class="user-wrapper">
             <div class="user-wrapper-info">
@@ -48,9 +43,6 @@ include '../views/menu.php';
                     <label><?php echo "Parking points: $userPoints" ?></label>
                     <label><?php echo "Status: $userStatusLowerCase" ?></label>
                     <label><?php if ($userParkingInfo != null) {
-                                // $zone = $parkingSpot['zone'];
-                                // $parkNumber = $parkingSpot['number'];
-                                // echo "The user is parked on parking spot: $zone $parkNumber";
                                 echo "<b> The user is in the parking now!</b>";
                             } else {
                                 echo "<b> The user is not in the parking now! </b>";

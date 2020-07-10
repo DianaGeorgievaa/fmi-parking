@@ -23,6 +23,8 @@
             <input type="password" id="password" class="input-style" name="password" onfocusout=" isPasswordValid()" placeholder="Password" required />
             <p id="confirmedPasswordError"></p>
             <input type="password" id="confirmedpassword" class="input-style" name="confirmedpassword" onfocusout="isConfirmPasswordValid()" placeholder="Confirm password" required />
+            <p id="carNumberError"></p>
+            <input type="text" id="carnumber" class="input-style" name="carnumber" onfocusout="isCarNumberValid()" placeholder="Car number" required />
             <div class="additional-fields">
                 <label for="status" id="status-field">Status:</label>
                 <select name="status" id="status" readonly>

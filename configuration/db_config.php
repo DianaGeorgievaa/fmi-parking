@@ -9,6 +9,6 @@ function getDatabaseConnection()
     $username = $configs['username'];
     $password = $configs['password'];
 
-    $connection = new PDO("mysql:host=$host;dbname=$dbname", $username, $password) or die("The connection with the database was not established!");
+    $connection = new PDO("mysql:host=$host;dbname=$dbname", $username, $password) or Utils::showMessage(MessageUtils::NOT_ESTABLISHED_DATABASE_MESSAGE, false);
     return $connection;
 }

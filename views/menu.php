@@ -37,7 +37,7 @@ function getGreetingMessage()
             <?php if (isLoggedInUser()) { ?>
                 <?php if (isLoggedInAdmin()) { ?>
                     <a href="../views/schedule.php">
-                        Add semester schedule
+                        Semester schedule
                     </a>
                     <a href="../views/top-users-by-points.php">
                         Top 3 users

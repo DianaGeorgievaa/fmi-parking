@@ -1,27 +1,24 @@
 {
     "user": [{
-            "firstName": "Ivan",
-            "lastName": "Ivanov",
+            "email": "ivan@abv.bg",
             "course": [{
                 "courseTitle": "Algebra",
-                "courseDay": "Monday",
+                "courseDay": "Thursday",
                 "startTime": "18:15",
                 "endTime": "20:00"
             }]
         },
         {
-            "firstName": "Hristo",
-            "lastName": "Hristov",
+            "email": "tqncata@abv.bg",
             "course": [{
                 "courseTitle": "Geometry",
-                "courseDay": "Tuesday",
-                "startTime": "12:15",
-                "endTime": "15:00"
+                "courseDay": "Thursday",
+                "startTime": "10:00",
+                "endTime": "12:00"
             }]
         },
         {
-            "firstName": "Milen",
-            "lastName": "Petrov",
+            "email": "milen@abv.bg",
             "course": [{
                 "courseTitle": "WEB technologies",
                 "courseDay": "Wednesday",
@@ -30,8 +27,7 @@
             }]
         },
         {
-            "firstName": "Georgi",
-            "lastName": "Georgiev",
+            "email": "georgi@abv.bg",
             "course": [{
                 "courseTitle": "Object oriented programming",
                 "courseDay": "Friday",
@@ -40,28 +36,25 @@
             }]
         },
         {
-            "firstName": "Plamena",
-            "lastName": "Plamenova",
+            "email": "plamena@abv.bg",
             "course": [{
                 "courseTitle": "Operating systems",
-                "courseDay": "Saturday",
-                "startTime": "21:45",
-                "endTime": "22:00"
+                "courseDay": "Thursday",
+                "startTime": "16:45",
+                "endTime": "20:00"
             }]
         },
         {
-            "firstName": "Iva",
-            "lastName": "Ivanova",
+            "email": "iva@abv.bg",
             "course": [{
                 "courseTitle": "Mobile applications",
-                "courseDay": "Saturday",
-                "startTime": "21:45",
-                "endTime": "22:00"
+                "courseDay": "Thursday",
+                "startTime": "15:00",
+                "endTime": "17:00"
             }]
         },
         {
-            "firstName": "Daniela",
-            "lastName": "Danielova",
+            "email": "daniela@abv.bg",
             "course": [{
                 "courseTitle": "Clean code",
                 "courseDay": "Saturday",

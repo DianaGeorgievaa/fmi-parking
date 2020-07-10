@@ -16,12 +16,14 @@ if (password_verify($password, $hashedPassword)) {
     $firstname = $user['first_name'];
     $lastname = $user['last_name'];
     $status = $user['status'];
+    $carNumber = $user['car_number'];
 
     session_start();
     $_SESSION["email"] = $email;
     $_SESSION["firstName"] = $firstname;
     $_SESSION["lastName"] = $lastname;
     $_SESSION["status"] = $status;
+    $_SESSION["carNumber"] = $carNumber;
     header("Location:" . '../views/main.php');
 } else {
     Utils::showMessage(MessageUtils::INVALID_CREDENTIALS_MESSAGE, false);

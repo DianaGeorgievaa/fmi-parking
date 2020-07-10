@@ -11,6 +11,7 @@
     define("STATUS_FIELD", "status", true);
     define("PHOTO_FIELD", "photo", true);
     define("CONFIRMED_PASSWORD_FIELD", "confirmedpassword", true);
+    define("CAR_NUMBER_FIELD", "carnumber", true);
 
     $invalidFieldMessages = array(
         FIRST_NAME_FIELD => "Please insert correct firstname without any special signs.",
@@ -18,7 +19,8 @@
         EMAIL_FIELD => "Please insert correct email.",
         PASSWORD_FIELD => "Please insert password with min length 10 symbols.",
         CONFIRMED_PASSWORD_FIELD => "The two passwords should be the same.",
-        STATUS_FIELD => "Please select the most suitable for you status."
+        STATUS_FIELD => "Please select the most suitable for you status.",
+        CAR_NUMBER_FIELD => "The car number should be in valid format - X(X)1111Y(Y)"
     );
 
     if ($_POST) {
@@ -27,6 +29,7 @@
         $firstname = $_POST[FIRST_NAME_FIELD];
         $lastname = $_POST[LAST_NAME_FIELD];
         $password = $_POST[PASSWORD_FIELD];
+        $carNumber = $_POST[CAR_NUMBER_FIELD];
         $status = strtoupper($_POST[STATUS_FIELD]);
         $points = 0;
         $photo = getUploadedPhoto();
@@ -40,7 +43,7 @@
         if (!DatabaseQueriesUtils::isExistingEmail($email)) {
             $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
-            $user = new User($firstname, $lastname, $email, $hashedPassword, $status, $photo, $points, $qrCodeNameValue);
+            $user = new User($firstname, $lastname, $email, $hashedPassword, $status, $photo, $points, $qrCodeNameValue, $carNumber);
             DatabaseQueriesUtils::saveUser($user);
 
             if ($status != 'ADMIN') {
@@ -60,6 +63,7 @@
         validateFormField(LAST_NAME_FIELD, '/^[A-Z][a-z-]{3,25}/', $errors);
         validateFormField(EMAIL_FIELD, '/[^@]+@[^\.]+\..+/', $errors);
         validateFormField(PASSWORD_FIELD, '/^.{10,}/', $errors);
+        validateFormField(CAR_NUMBER_FIELD,'/^[A-Z]{1,2}[0-9]{4}[A-Z]{1,2}/', $errors);
         validatePasswords($errors);
         validateStatus($errors);
 

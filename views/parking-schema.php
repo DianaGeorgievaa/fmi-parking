@@ -4,6 +4,8 @@ include '../views/menu.php';
 
 if (!isLoggedInUser()) {
     header('Location:' . '../views/index.php');
+} elseif(isLoggedInAdmin()){
+    header('Location:' . '../views/main.php');
 }
 ?>
 

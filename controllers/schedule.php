@@ -1,14 +1,11 @@
 <?php
 include '../utils/databaseQueriesUtils.php';
 
-define("NAME_PATTERN", '/^[A-Z][a-z]+$/', true);
 define("COURSE_PATTERN", '/^[a-zA-Z0-9 ]+$/', true);
 define("TIME_PATTERN", '/^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/', true);
 
 define("SCHEDULE_FIELDNAME", "schedule");
 
-define("FIRSTNAME_FIELDNAME", "firstname", true);
-define("LASTNAME_FIELDNAME", "lastname", true);
 define("COURS_TITLE_FIELDNAME", "courseTitle", true);
 define("COURS_DAY_FIELDNAME", "courseDay", true);
 define("COURS_START_TIME_FIELDNAME", "startTime", true);
@@ -17,8 +14,6 @@ define("COURS_END_TIME_FIELDNAME", "endTime", true);
 $dayOfWeeks = Utils::DAYS_OF_WEEK;
 $schedule_formats = array("json");
 $invalidFieldMessages = array(
-    FIRSTNAME_FIELDNAME => "Please insert correct firstname!",
-    LASTNAME_FIELDNAME => "Please insert correct lastname!",
     COURS_TITLE_FIELDNAME => "Please insert correct course title!",
     COURS_DAY_FIELDNAME => "Please insert correct day!",
     COURS_START_TIME_FIELDNAME => "Please insert correct start time!",
@@ -31,10 +26,17 @@ if (!isset($_SESSION)) {
 
 if ($_POST) {
     if (isLoggedInAdmin()) {
-        validateSchedulerFormat();
-        $scheduler = $_FILES[SCHEDULE_FIELDNAME];
-        constructScheduler();
-        Utils::showMessage(MessageUtils::SUCCESSFUL_UPLOADED_SCHEDULER_MESSAGE, true);
+        if (isset($_POST['delete-schedule'])) {
+            DatabaseQueriesUtils::deleteSchedule();
+            Utils::showMessage(MessageUtils::SUCCESSFUL_DELETED_SCHEDULER_MESSAGE, true);
+        } elseif (isset($_POST['upload-schedule'])) {
+            validateSchedulerFormat();
+            $scheduler = $_FILES[SCHEDULE_FIELDNAME];
+            constructScheduler();
+            Utils::showMessage(MessageUtils::SUCCESSFUL_UPLOADED_SCHEDULER_MESSAGE, true);
+        } else {
+            Utils::showMessage(MessageUtils::INVALID_REQUEST_ERROR_MESSAGE, false);
+        }
     } else {
         Utils::showMessage(MessageUtils::UPLOADING_SCHEDULER_ERROR_MESSAGE, false);
     }
@@ -47,7 +49,7 @@ function isLoggedInAdmin()
 
 function validateSchedulerFormat()
 {
-    if(!isset($_FILES[SCHEDULE_FIELDNAME])){
+    if (!isset($_FILES[SCHEDULE_FIELDNAME])) {
         Utils::showMessage(MessageUtils::NOT_SELECTED_SCHEDULER_ERROR_MESSAGE, false);
     }
     $schedulerErrors = $_FILES[SCHEDULE_FIELDNAME]["error"];
@@ -70,18 +72,15 @@ function constructScheduler()
     for ($i = 0; $i < sizeof($decodedJson->user); $i++) {
         $errors = array();
         $course = null;
-        $lecture = null;
-        $areValidLecturerNames = false;
         $areValidCourseFields = false;
 
-        $firstName = $decodedJson->user[$i]->firstName;
-        $lastName = $decodedJson->user[$i]->lastName;
-        $areValidLecturerNames = areValidLecturerNames($firstName, $lastName, $errors);
-        if (!$areValidLecturerNames) {
+        $lectureEmail = $decodedJson->user[$i]->email;
+        $lectureId = DatabaseQueriesUtils::getLectureIdByEmail($lectureEmail);
+        if ($lectureId == null) {
+            echo "The lecturer with email $lectureEmail is not registred in the system! <br>";
             continue;
         }
 
-        $lecture = new Lecturer($firstName, $lastName);
         for ($j = 0; $j < sizeof($decodedJson->user[$i]->course); $j++) {
             $courseTitle = $decodedJson->user[$i]->course[$j]->courseTitle;
             $courseDay = $decodedJson->user[$i]->course[$j]->courseDay;
@@ -89,38 +88,14 @@ function constructScheduler()
             $endTime = $decodedJson->user[$i]->course[$j]->endTime;
 
             $areValidCourseFields = areValidCourseFields($courseTitle, $courseDay, $startTime, $endTime, $errors);
-            if ($areValidLecturerNames && $areValidCourseFields) {
+            if ($areValidCourseFields) {
                 $course = new Course($courseTitle, $courseDay, $startTime, $endTime);
-                saveSchedule($lecture, $course);
+                DatabaseQueriesUtils::saveSchedule($course, $lectureId);
+            } else {
+                echo "Invalid record in the schedule, it will be skipped!";
             }
         }
-        if (!$areValidLecturerNames || !$areValidCourseFields) {
-            echo "Invalid record in the shedule, it will be skipped!";
-        }
     }
-}
-
-function saveSchedule(Lecturer $lecture, Course $course)
-{
-    $firstNamelecture = $lecture->getFirstName();
-    $lastNamelecture = $lecture->getLastName();
-    $lectureId = DatabaseQueriesUtils::getLectureIdByNames($firstNamelecture, $lastNamelecture);
-    if ($lectureId == null) {
-        echo "The lecturer $firstNamelecture $lastNamelecture is not registred in the system!";
-        return;
-    }
-
-    DatabaseQueriesUtils::saveSchedule($course, $lectureId);
-}
-
-function areValidLecturerNames($firstName, $lastName, &$errors)
-{
-    validateField($firstName, NAME_PATTERN, FIRSTNAME_FIELDNAME, $errors);
-    validateField($lastName, NAME_PATTERN, LASTNAME_FIELDNAME, $errors);
-    if (count($errors) != 0) {
-        return false;
-    }
-    return true;
 }
 
 function areValidCourseFields($courseTitle, $courseDay, $startTime, $endTime, &$errors)

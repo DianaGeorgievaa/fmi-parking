@@ -12,11 +12,14 @@ class MessageUtils
     const UPLOADING_SCHEDULER_ERROR_MESSAGE = "You should be logged in as admin in order to upload scheduler!";
     const INVALID_SCHEDULER_FORMAT_ERROR_MESSAGE = "The uploaded scheduler is not in valid format!";
     const SUCCESSFUL_UPLOADED_SCHEDULER_MESSAGE = "The scheduler uploaded successfully!";
+    const SUCCESSFUL_DELETED_SCHEDULER_MESSAGE = "The scheduler was deleted successfully!";
     const BLOCKED_ENTRANCE_MESSAGE = "Your entrance is blocked!";
     const NOT_FREE_PAKING_SPOTS_MESSAGE = "There are no free parking spots!";
     const NOT_ENOUGHT_PAKING_SPOTS_MESSAGE = "There are not enough parking spots!";
     const PARKING_ENTRANCE_WARNING_MESSAGE = "You don't have lectures in the next 30 minutes, but you are allowed to enter the parking! Notification will be send if you have to leave!";
     const NO_USERS_WITHOUT_LECTURES_ERROR_MESSAGE = "There are no users that use the parking without having lectures!";
+    const INVALID_REQUEST_ERROR_MESSAGE = "Invalid request!";
+    const NOT_ESTABLISHED_DATABASE_MESSAGE = "The connection with the database was not established!";
 
     const DATABASE_SAVE_INFORMATION_ERROR_MESSAGE = "Failed to save information in Database! Please try again later!";
     const DATABASE_GET_INFORMATION_ERROR_MESSAGE = "Failed to get information from Database! Please try again later!";

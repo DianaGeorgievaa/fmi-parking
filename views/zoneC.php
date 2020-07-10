@@ -6,6 +6,7 @@ if (!isLoggedInUser()) {
 }
 
 $user_email = (isset($_SESSION['email'])) ? $_SESSION['email'] : '';
+$carNumber = (isset($_SESSION['carNumber'])) ? $_SESSION['carNumber'] : '';
 
 ?>
 <!DOCTYPE html>
@@ -116,10 +117,14 @@ $user_email = (isset($_SESSION['email'])) ? $_SESSION['email'] : '';
         console.log(user_email);
         sessionStorage.setItem("user_email", user_email);
 
+        var car_number = '<?php echo $carNumber; ?>';
+        sessionStorage.setItem("car_number", car_number);
+
         sessionStorage.setItem("typeSpot", "shady");
 
         document.getElementById("embedForm").style.display = "block";
         d3.select("#" + spot).attr("fill", "red");
+        document.getElementById("carNumber").value = sessionStorage.getItem("car_number");
     }
 
     function setAvailableZones() {

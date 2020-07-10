@@ -2,5 +2,5 @@
 
 return array(
     'username' => 'faculty.parking@gmail.com',
-    'password' => '',
+    'password' => 'VeEv6WjSR5qTVUh2!',
 );

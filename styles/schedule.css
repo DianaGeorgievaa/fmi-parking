@@ -15,3 +15,16 @@
 #upload-schedule-button:hover {
     background: #bbbaba;
 }
+
+#delete-schedule-button {
+    background-color: #f44336;
+    border: #b81004;
+}
+
+#delete-schedule-button:hover {
+    background-color: #f02112;
+}
+
+#delete-button-wrapper {
+    margin-top: 10px;
+}
