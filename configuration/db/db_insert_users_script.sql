@@ -1,19 +1,3 @@
--- phpMyAdmin SQL Dump
--- version 5.0.2
--- https://www.phpmyadmin.net/
---
--- Host: localhost
--- Generation Time: Jun 14, 2020 at 01:05 AM
--- Server version: 10.4.11-MariaDB
--- PHP Version: 7.4.5
-
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-START TRANSACTION;
-SET time_zone = "+00:00";
-
---
--- Dumping data for table `users`
---
 USE `fmi_parking`;
 INSERT INTO `users` (`user_id`, `first_name`, `last_name`, `email`, `password`, `status`, `photo_name`, `points`, `qr_code`, `car_number`) VALUES
 (1, 'Ivaylo', 'Ivanov', 'ivaylo@abv.bg', '$2y$10$Ls2.zREScuqEGrrKMnMG0.85GrH98IN.R8wW7XjA2Bo7X/PCFhogK', 'ADMIN', '5ee5180bf36ed.png', 0, NULL, NULL),

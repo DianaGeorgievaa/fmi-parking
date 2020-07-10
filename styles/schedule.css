@@ -19,6 +19,7 @@
 #delete-schedule-button {
     background-color: #f44336;
     border: #b81004;
+    width: 135px;
 }
 
 #delete-schedule-button:hover {
@@ -26,5 +27,6 @@
 }
 
 #delete-button-wrapper {
-    margin-top: 10px;
+    margin-top: 15px;
+    width: 150px;
 }
