@@ -20,7 +20,7 @@ class MessageUtils
     const NO_USERS_WITHOUT_LECTURES_ERROR_MESSAGE = "There are no users that use the parking without having lectures!";
     const INVALID_REQUEST_ERROR_MESSAGE = "Invalid request!";
     const NOT_ESTABLISHED_DATABASE_MESSAGE = "The connection with the database was not established!";
-    const NO_UPLOADED_SCHEDULE_MESSAGE = "There is no upload schedule!";
+    const NO_UPLOADED_SCHEDULE_MESSAGE = "There is no uploaded schedule!";
 
     const DATABASE_SAVE_INFORMATION_ERROR_MESSAGE = "Failed to save information in Database! Please try again later!";
     const DATABASE_GET_INFORMATION_ERROR_MESSAGE = "Failed to get information from Database! Please try again later!";

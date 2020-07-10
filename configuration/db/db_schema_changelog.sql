@@ -15,14 +15,14 @@ USE `fmi_parking`;
 
 CREATE TABLE `users` (
     `user_id` int NOT NULL AUTO_INCREMENT,
-    `first_name` varchar(256) NOT NULL,
-    `last_name` varchar(256) NOT NULL,
+    `first_name` varchar(255) NOT NULL,
+    `last_name` varchar(255) NOT NULL,
     `email` varchar(255) NOT NULL UNIQUE,
-    `password` varchar(256) NOT NULL,
+    `password` varchar(255) NOT NULL,
     `status` enum('ADMIN', 'PERMANENT', 'TEMPORARY', 'BLOCKED') NOT NULL DEFAULT 'BLOCKED',
-    `photo_name` varchar(256) NOT NULL,
+    `photo_name` varchar(255) NOT NULL,
     `points` int(11) NOT NULL,
-    `qr_code` varchar(256),
+    `qr_code` varchar(255),
     `car_number` varchar(8),
     PRIMARY KEY (user_id)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8;
@@ -79,9 +79,9 @@ CREATE TABLE `user_parking_info` (
 
 CREATE TABLE `profile_viewer` (
     `profile_viewer_id` int NOT NULL AUTO_INCREMENT,
-    `first_name` varchar(256) NOT NULL,
-    `last_name` varchar(256) NOT NULL,
-    `email` VARCHAR(256) NOT NULL,
+    `first_name` varchar(255) NOT NULL,
+    `last_name` varchar(255) NOT NULL,
+    `email` VARCHAR(255) NOT NULL,
     `view_time` datetime NOT NULL,
     PRIMARY KEY(profile_viewer_id),
     `user_id` int NOT NULL

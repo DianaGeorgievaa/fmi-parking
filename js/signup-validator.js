@@ -96,7 +96,9 @@ function isConfirmPasswordValid() {
 }
 
 function isCarNumberValid() {
-    if (!document.getElementById(CAR_NUMBER_ID).value.match(CAR_NUMBER_REGEX)) {
+    let status = document.getElementById("status");
+    let statusValue = status.options[status.selectedIndex].value;
+    if (!document.getElementById(CAR_NUMBER_ID).value.match(CAR_NUMBER_REGEX) && statusValue !== "admin") {
         document.getElementById(
             INVALID_CAR_NUMBER_ID
         ).innerHTML = INVALID_CAR_NUMBER_MESSAGE;
@@ -111,8 +113,11 @@ function checkIfIsAdminStatus() {
     let statusValue = status.options[status.selectedIndex].value;
     let carNumberField = document.getElementById("carnumber");
     if (statusValue === "admin") {
+        carNumberField.required = false;
         carNumberField.classList.add('hide-car-number');
+
     } else {
+        carNumberField.required = true;
         carNumberField.classList.remove('hide-car-number');
     }
 }
